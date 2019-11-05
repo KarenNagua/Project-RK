@@ -1,0 +1,11 @@
+
+Categorías
+Direcciones
+Sitios
+    Categoría
+    Coordenadas
+
+Usuario
+    Mis Sitios
+    Administrador
+    Usuario final
