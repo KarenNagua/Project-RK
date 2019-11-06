@@ -120,7 +120,7 @@ $('#reg_categoria').click(function(){
 });
 
 $('#buscar_categoria').click(function(){
-    let label = $('#label_search').val();
+    let label = $('#label_search').val().toLowerCase();
     if(label.length > 0) {
         $('#lista_categorias').empty();
         db.collection('category').get()
