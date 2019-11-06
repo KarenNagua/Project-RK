@@ -147,6 +147,14 @@ body {
     justify-content: center;
 }
 
+.bloque .caja.categorias .lista .busqueda i:hover {
+    cursor: pointer;
+}
+
+.bloque .caja.categorias .lista .busqueda i:active {
+    transform: scale(0.98);
+}
+
 .bloque .caja.categorias .lista .tags {
     height: calc(100% - 9vw);
     padding: 0 1vw;

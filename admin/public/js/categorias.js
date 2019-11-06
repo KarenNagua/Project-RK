@@ -118,3 +118,35 @@ $('#reg_categoria').click(function(){
         M.toast({html: 'Error, existen campos incompletos'});
     }
 });
+
+$('#buscar_categoria').click(function(){
+    let label = $('#label_search').val();
+    if(label.length > 0) {
+        $('#lista_categorias').empty();
+        db.collection('category').get()
+            .then( docs => {
+                docs.forEach( doc => {
+                    if (label === 'todos' || label === 'Todos') {
+                        let html  = '<div id="tag_'+doc.id+'" class="tag item_categoria" data-id="'+doc.id+'">';
+                            html += '   <i class="fas fa-tag"></i>';
+                            html += '   <span id="tag_span_'+doc.id+'">'+doc.data().label+'</span>';
+                            html += '</div>';
+                        $('#lista_categorias').append(html);
+                    } else {
+                        let name = doc.data().label.toLowerCase();
+                        if( name.includes(label) ) {
+                            let html  = '<div id="tag_'+doc.id+'" class="tag item_categoria" data-id="'+doc.id+'">';
+                                html += '   <i class="fas fa-tag"></i>';
+                                html += '   <span id="tag_span_'+doc.id+'">'+doc.data().label+'</span>';
+                                html += '</div>';
+                            $('#lista_categorias').append(html);
+                        }
+                    }
+                });
+            }).catch( error => {
+                M.toast({html: 'Error, no se pudo completar la operación'});
+            });
+    } else {
+        M.toast({html: 'Error, existen campos incompletos'});
+    }
+});
