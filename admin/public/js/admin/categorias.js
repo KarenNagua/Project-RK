@@ -1,6 +1,3 @@
-//Por rapidez aun no valida si hay usuario logeado o no
-
-
 /*
 * Realtime Updates in collection category
 */
@@ -8,6 +5,7 @@ $('#lista_categorias').empty();
 db.collection("category")
     .onSnapshot(function(snapshot) {
         snapshot.docChanges().forEach(function(change) {
+            console.log(change.doc.data());
             if (change.type === "added") {
                 //Every time the page is loaded, all documents in the collection are loade here one by one, and this allow to charge content to the UI
                 let doc = change.doc;

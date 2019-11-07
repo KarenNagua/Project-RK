@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>PROJECTRK</title>
+	<meta charset='utf-8'>
+	<meta http-equiv='X-UA-Compatible' content='IE=edge'>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="apple-mobile-web-app-capable" , content="yes">
+	<meta name="author" content="">
+	<meta name="description" content="">
+	<meta name="keywords" content="">
+
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+	<link href='css/main.css' rel='stylesheet' type='text/css'>
+</head>
+
+<body>
+	<div class="menu shadow col">
+		<div class="icono">
+			<i class="fas fa-map-marked-alt"></i>
+			<span>PROJECTRK</span>
+		</div>
+		<ul class="items">
+			<li class="item btn_menu" data-target="bloque_intro">
+				<div class="centro">
+					<i class="fas fa-home a"></i>
+					<span>Home</span>
+				</div>
+			</li>
+			<li class="item btn_menu" data-target="bloque_usuarios">
+				<div class="centro">
+					<i class="fas fa-user b"></i>
+					<span>Usuarios</span>
+				</div>
+			</li>
+			<li class="active item btn_menu">
+				<div class="centro">
+					<i class="fas fa-tags c"></i>
+					<span>Categorías</span>
+				</div>
+			</li>
+			<li class="item btn_menu">
+				<div class="centro">
+					<i class="fas fa-map-marker-alt d"></i>
+					<span>Sitios</span>
+				</div>
+			</li>
+		</ul>
+	</div>
+	<div class="bloque col">
+		<div class="caja usuarios" id="bloque_usuarios">
+			<span>Admin de usuarios</span>
+		</div>
+		<div class="caja active categorias" id="admin_categorias">
+			<div class="lista">
+				<span class="titulo">Categorías registradas</span>
+				<div class="busqueda">
+					<input type="text" placeholder="Ingresa una busqueda o todos" id="label_search">
+					<i class="fas fa-search" id="buscar_categoria"></i>
+				</div>
+				<div class="tags" id="lista_categorias">
+					<div class="tag active item_categoria" data-id="">
+						<i class="fas fa-tag"></i>
+						<span>Nombre de la categoria</span>
+					</div>
+					<div class="tag item_categoria" data-id="">
+						<i class="fas fa-tag"></i>
+						<span>Nombre de la categoria</span>
+					</div>
+					<div class="tag item_categoria" data-id="">
+						<i class="fas fa-tag"></i>
+						<span>Nombre de la categoria</span>
+					</div>
+				</div>
+			</div>
+			<div class="datos">
+				<span class="titulo">Información de la categoría</span>
+				<div class="row" id="data_form_categoria">
+					<div class="col s6">
+						<input class="browser-default input_form" type="text" id="categoria_label" data-id="" data-collection="" data-campo="">
+					</div>
+					<div class="col s6">
+						<input class="browser-default input_form" type="text" id="categoria_date" data-id="" data-collection="" data-campo="" disabled>
+					</div>
+				</div>
+			</div>
+			<div class="datos datos_b">
+				<span class="titulo">Registrar categoría</span>
+				<div class="row" id="data_form_categoria_registrar">
+					<div class="col s12">
+						<input class="browser-default" type="text" id="reg_categoria_label" data-id="" data-collection="" data-campo="" placeholder="Nombre de la categoría">
+					</div>
+					<div class="col s12 b">
+						<a id="reg_categoria" class="shadow">Registrar</a>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="caja sitios" id="admin_sitios">
+			<span>Admin de Sitios</span>
+		</div>
+	</div>
+
+	<!--Scripts-->
+	<script src='https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+	<script src="https://www.gstatic.com/firebasejs/5.5.1/firebase-app.js"></script>
+	<script src="https://www.gstatic.com/firebasejs/5.5.1/firebase-auth.js"></script>
+	<script src="https://www.gstatic.com/firebasejs/5.5.9/firebase-firestore.js"></script>
+	<script src="js/firebase_config.js"></script>
+	<script src="js/admin/categorias.js"></script>
+</body>
+
+</html>
