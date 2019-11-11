@@ -12,11 +12,13 @@ var person = {
 //Account Model
 var account = {
     id: String, //Firebase creates it automatically, but I put it here just as a reference
+    uid: String, //UID of user in Firebase auth
     id_person: String,
     email: String,
     recovery_email: String,
     password: String,
     type: Number, //1 user is an admin, 0 user is a final user 
+    state: Number, //0 active, 1 not acces allowed, -1 deleted
 };
 
 //Category Model

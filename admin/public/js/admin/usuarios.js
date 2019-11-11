@@ -1,4 +1,4 @@
-const url_createUser = 'http://localhost:5001/project-f1d8f/us-central1/createUserInAuth';
+const url_createUser = 'https://us-central1-project-f1d8f.cloudfunctions.net/createUserInAuth';
 
 /*
 * Realtime Updates in collection category

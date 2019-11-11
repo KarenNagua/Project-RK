@@ -1,5 +1,6 @@
 //Poject URl
-const url = "http://localhost:5000";
+//const url = "http://localhost:5000";
+const url = 'https://project-f1d8f.firebaseapp.com';
 
 //Firebase Config
 var firebaseConfig = {

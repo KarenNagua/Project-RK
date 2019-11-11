@@ -1,0 +1,131 @@
+::placeholder {
+    color: #434343;
+}
+
+body {
+    padding: 0;
+    margin: 0;
+    font-size: .9vw;
+    background-image: url(../img/fondo.jpg);
+    background-size: 100% 110%;
+    background-position: center;
+    width: 100%;
+    height: 100vh;
+    user-select: none;
+}
+
+.page {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.page .aling {
+    width: 40vw;
+    height: 32vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.page .aling .caja {
+    background: rgba(255, 255, 255, 0.4);
+    height: 78%;
+    width: 70%;
+    -webkit-box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.12), 0 1px 5px 0 rgba(0, 0, 0, 0.2);
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.12), 0 1px 5px 0 rgba(0, 0, 0, 0.2);
+    border-radius: 1vw;
+}
+
+.page .aling .caja .icono {
+    height: 14vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-flow: column;
+}
+
+.page .aling .caja .icono i {
+    font-size: 6vw;
+    margin-bottom: 1vw;
+    color: #434343;
+}
+
+.page .aling .caja .icono span {
+    font-family: 'Anton', sans-serif;
+    font-size: 2vw;
+    color: #434343;
+}
+
+.page .aling .caja .login {
+    position: relative;
+    height: calc(100% - 14vw);
+}
+
+.page .aling .caja .login .centro {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.page .aling .caja .login .der {
+    position: absolute;
+    height: 100%;
+    width: 86%;
+    left: 0;
+}
+
+.page .aling .caja .login .der .box {
+    width: 90%;
+}
+
+.page .aling .caja .login .der .box input {
+    width: 100%;
+    border: none;
+    background: none;
+    padding: 1vw;
+    color: #434343;
+    outline: 0;
+    font-weight: 500;
+    margin-top: .5vw;
+    margin-bottom: .5vw;
+}
+
+.page .aling .caja .login .der .box .linea {
+    display: block;
+    width: 90%;
+    height: .05vw;
+    background: #434343;
+    margin: 0 auto;
+}
+
+.page .aling .caja .login .izq .box {
+
+}
+
+.page .aling .caja .login .izq .box i {
+    font-size: 2.5vw;
+    color: #434343;
+}
+
+.page .aling .caja .login .izq .box i.noactive {
+    pointer-events: none;
+    color: #eee;
+    cursor: wait;
+}
+
+.page .aling .caja .login .izq .box i:hover {
+    cursor: pointer;
+}
+
+.page .aling .caja .login .izq .box i:active {
+    transform: scale(0.96);
+}
+
+.page .aling .caja .login .izq {
+    position: absolute;
+    height: 100%;
+    right: 0;
+    width: 14%;
+}

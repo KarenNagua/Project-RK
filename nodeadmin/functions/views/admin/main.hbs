@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>PROJECTRK</title>
+	<meta charset='utf-8'>
+	<meta http-equiv='X-UA-Compatible' content='IE=edge'>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="apple-mobile-web-app-capable" , content="yes">
+	<meta name="author" content="">
+	<meta name="description" content="">
+	<meta name="keywords" content="">
+
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+	<link href='../css/main.css' rel='stylesheet' type='text/css'>
+
+	<script src='https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+	<script src="../js/admin/main.js"></script>
+	<script>
+		var account = {{json account}};
+		var account_list = {{json account_list}};
+		var person_list = {{json person_list}};
+		var category_list = {{json category_list}};
+		var site_list = {{json site_list}};
+	</script>
+</head>
+
+<body>
+	<div class="menu col">
+		<div class="icono">
+			<i class="fas fa-map-marked-alt"></i>
+			<span>PROJECTRK</span>
+		</div>
+		<ul class="items">
+			<li class="active item btn_menu" data-target="bloque_usuarios">
+				<div class="centro">
+					<i class="fas fa-user b"></i>
+					<span>Usuarios</span>
+				</div>
+			</li>
+			<li class="item btn_menu">
+				<div class="centro">
+					<i class="fas fa-tags c"></i>
+					<span>Categorías</span>
+				</div>
+			</li>
+			<li class="item btn_menu">
+				<div class="centro">
+					<i class="fas fa-map-marker-alt d"></i>
+					<span>Sitios</span>
+				</div>
+			</li>
+			<li class="item btn_menu">
+				<div class="centro">
+					<i class="fas fa-sign-out-alt"></i>
+					<span>Cerrar Sesión</span>
+				</div>
+			</li>
+		</ul>
+	</div>
+	<div class="bloque col">
+		<div class="cabecera shadow">
+			<div class="barra">
+				<div class="busqueda shadow">
+					<div class="a">
+						<i class="fas fa-search"></i>
+						<input type="text" class="browser-default" placeholder="Ingresa un texto para buscar" id="input_busqueda">
+					</div>
+				</div>
+				<div class="perfil">
+					<img id="url_picture" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSwOfyvCRXPwVBEdIGZ5UTcEW5n7Gl4aDxIlFJktEaEQcnPiXp9&s">
+					<span id="user_name">Nombre del usuario</span>
+				</div>
+			</div>
+			<div class="bloques">
+				<div class="bloq shadow" id="bloque_total_admins">
+					<div class="texto">
+						<span class="titulo">Administradores</span>
+						<span class="number" id="total_admins">0</span>
+					</div>
+					<div class="icono">
+						<i class="fas fa-user-shield a"></i>
+					</div>
+				</div>
+				<div class="bloq shadow" id="bloque_total_users">
+					<div class="texto">
+						<span class="titulo">Usuarios Finales</span>
+						<span class="number" id="total_users">0</span>
+					</div>
+					<div class="icono">
+						<i class="fas fa-users b"></i>
+					</div>
+				</div>
+				<div class="bloq shadow" id="bloque_total_categorias">
+					<div class="texto">
+						<span class="titulo">Categorías</span>
+						<span class="number" id="total_categorias">0</span>
+					</div>
+					<div class="icono">
+						<i class="fas fa-tags c"></i>
+					</div>
+				</div>
+				<div class="bloq shadow" id="bloque_total_sitios">
+					<div class="texto">
+						<span class="titulo">Sitios</span>
+						<span class="number" id="total_sitios">0</span>
+					</div>
+					<div class="icono">
+						<i class="fas fa-map-marker-alt d"></i>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="cuerpo">
+			<div class="caja usuarios active" id="caja_usuarios">
+				<div class="a shadow">
+					<div class="titulo shadow">
+						<span>Usuarios registrados</span>
+					</div>
+					<div class="lista" id="lista_usuarios">
+					</div>
+					<div class="campos">
+						<div class="progress loader beta" id="loader_info_usuario">
+							<div class="indeterminate barra"></div>
+						</div>
+						<div class="inputs" id="form_info_usuario">
+							<span class="subttitulo">Información personal</span>
+							<div class="input">
+								<input class="browser-default input_usuario_info" type="text" placeholder="Nombres" id="names">
+								<input class="browser-default input_usuario_info" type="text" placeholder="Apellidos" id="surnames">
+								<input class="browser-default input_usuario_info" type="date" id="birthday">
+								<input class="browser-default input_usuario_info" type="number" placeholder="Teléfono celular" id="cellphone">
+							</div>
+							<span class="subttitulo">Detalles de la cuenta</span>
+							<div class="input">
+								<select class="browser-default select_usuario_info" id="type">
+									<option value="none" selected disabled>¿Que tipo de usuario será?</option>
+									<option value="0">Administrador</option>
+									<option value="1">Usuario Final</option>
+								</select>
+								<select class="browser-default select_usuario_info" id="state">
+									<option value="none" selected disabled>Estado de la cuenta</option>
+									<option value="0">Activa</option>
+									<option value="1">Bloqueada</option>
+									<option value="-1">Dada de baja</option>
+								</select>
+								<input class="browser-default" type="email" placeholder="¿Cuál es el email principal?" id="email" disabled>
+								<input class="browser-default" type="email" placeholder="¿Cuál es el email de recuperación?" id="recovery_email" disabled>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="b shadow">
+					<div class="opciones shadow">
+						<span>Registrar Usuario</span>
+						<i class="fas fa-check-circle" id="registrar_usuario"></i>
+					</div>
+					<div class="progress loader" id="loader_reg_usuario">
+						<div class="indeterminate barra"></div>
+					</div>
+					<div class="inputs" id="form_registro_usuario">
+						<span class="subttitulo">Información personal</span>
+						<div class="input">
+							<input class="browser-default" type="text" placeholder="Nombres" id="reg_names">
+							<input class="browser-default" type="text" placeholder="Apellidos" id="reg_surnames">
+							<input class="browser-default" type="date" id="reg_birthday">
+							<input class="browser-default" type="number" placeholder="Teléfono celular" id="reg_cellphone">
+							<input class="browser-default" type="file" placeholder="Selecciona la foto de perfil" id="reg_picture">
+						</div>
+						<span class="subttitulo">Detalles de la cuenta</span>
+						<div class="input">
+							<select class="browser-default" id="reg_type">
+								<option value="none" selected disabled>¿Que tipo de usuario será?</option>
+								<option value="0">Administrador</option>
+								<option value="1">Usuario Final</option>
+							</select>
+							<input class="browser-default" type="email" placeholder="¿Cuál es el email principal?" id="reg_email">
+							<input class="browser-default" type="email" placeholder="¿Cuál es el email de recuperación?" id="reg_recovery_email">
+							<input class="browser-default" type="password" placeholder="¿Cuál es la contraseña?" id="reg_password">
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!--Scripts-->
+	<script src="https://www.gstatic.com/firebasejs/5.5.1/firebase-app.js"></script>
+	<script src="https://www.gstatic.com/firebasejs/5.5.1/firebase-auth.js"></script>
+	<script src="https://www.gstatic.com/firebasejs/5.5.9/firebase-storage.js"></script>
+	<script src="../js/firebase_config.js"></script>
+	<script src="../js/admin/usuarios.js"></script>
+	<script>
+		//Set Data of actual user in UI
+		setDataUserInUI();
+		//ADD USERS TO THE LIST VIEW - UI
+		addUsersToListView();
+	</script>
+</body>
+
+</html>
