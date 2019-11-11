@@ -5,6 +5,31 @@ body {
     user-select: none;
 }
 
+.loader {
+    position: absolute;
+    top: 4vw;
+    background: #F6F9FC;
+    margin: 0;
+
+    z-index: -1;
+    opacity: 0;
+    transition: all .05s .05s;
+}
+
+.loader.beta {
+    top: 0;
+}
+
+.loader.visible {
+    z-index: 1;
+    opacity: 1;
+    transition: all .05s .05s;
+}
+
+.loader .barra {
+    background: #172B4D;
+}
+
 .menu {
     float: left;
     width: 20vw;
@@ -263,9 +288,143 @@ body {
     border-radius: .5vw;
     width: 42vw;
     height: 100%;
+    position: relative;
 }
 
+.bloque .cuerpo .caja .a .titulo {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 4vw;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 0 2vw;
+    z-index: 10;
+}
+
+.bloque .cuerpo .caja .a .titulo span {
+    color: #172B4D;
+    font-weight: 700;
+}
+
+.bloque .cuerpo .caja .a .lista {
+    position: absolute;
+    display: inline-block;
+    height: calc(100% - 4vw);
+    top: 4vw;
+    width: 12vw;
+    background: #F6F9FC;
+}
+
+.bloque .cuerpo .caja .a .lista .item {
+    cursor: pointer;
+    width: 100%;
+    padding: 1vw;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.bloque .cuerpo .caja .a .lista .item.active {
+    background: #F1F3F9;
+}
+
+.bloque .cuerpo .caja .a .lista .item:hover {
+    background: #F1F3F9;
+}
+
+.bloque .cuerpo .caja .a .lista .item:active {
+    transform: scale(0.98);
+}
+
+.bloque .cuerpo .caja .a .lista .item i {
+    color: #172B4D;
+    margin-right: .7vw;
+    font-size: .8vw;
+}
+
+.bloque .cuerpo .caja .a .lista .item span {
+    font-weight: 500;
+    font-size: .8vw;
+}
+
+.bloque .cuerpo .caja .a .campos {
+    position: absolute;
+    top: 4vw;
+    left: 12vw;
+    width: calc(100% - 12vw);
+    height: calc(100% - 4vw);
+    padding: .8vw 1.2vw;
+}
+
+.bloque .cuerpo .caja .a .campos .inputs {
+    height: 100%;
+    overflow-y: auto;
+}
+
+.bloque .cuerpo .caja .a .campos .inputs .subttitulo {
+    text-align: center;
+    color: #172B4D;
+    display: block;
+    padding: 1vw;
+    font-weight: 500;
+}
+
+.bloque .cuerpo .caja .a .campos .inputs .input {
+    padding: 0 2vw;
+}
+
+.bloque .cuerpo .caja .a .campos .inputs .input input {
+    width: 100%;
+    margin-bottom: .7vw;
+    border: none;
+    background: #F6F9FC;
+    padding: 1vw;
+    color: #172B4D;
+    border-radius: .6vw;
+    outline: 0;
+}
+
+.bloque .cuerpo .caja .a .campos .inputs .input select {
+    margin-bottom: .7vw;
+    background: #F6F9FC;
+    border: none;
+    border-radius: .6vw;
+    outline: 0;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 .bloque .cuerpo .caja .b {
+    position: relative;
     background: #fff;
     border-radius: .5vw;
     height: 100%;

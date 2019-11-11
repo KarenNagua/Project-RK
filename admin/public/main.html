@@ -105,14 +105,45 @@
 		<div class="cuerpo">
 			<div class="caja usuarios active" id="caja_usuarios">
 				<div class="a shadow">
-
+					<div class="titulo shadow">
+						<span>Usuarios registrados</span>
+					</div>
+					<div class="lista" id="lista_usuarios">
+					</div>
+					<div class="campos">
+						<div class="progress loader beta" id="loader_info_usuario">
+							<div class="indeterminate barra"></div>
+						</div>
+						<div class="inputs" id="form_info_usuario">
+							<span class="subttitulo">Información personal</span>
+							<div class="input">
+								<input class="browser-default input_usuario_info" type="text" placeholder="Nombres" id="names">
+								<input class="browser-default input_usuario_info" type="text" placeholder="Apellidos" id="surnames">
+								<input class="browser-default input_usuario_info" type="date" id="birthday">
+								<input class="browser-default input_usuario_info" type="number" placeholder="Teléfono celular" id="cellphone">
+							</div>
+							<span class="subttitulo">Detalles de la cuenta</span>
+							<div class="input">
+								<select class="browser-default select_usuario_info" id="type">
+									<option value="none" selected disabled>¿Que tipo de usuario será?</option>
+									<option value="0">Administrador</option>
+									<option value="1">Usuario Final</option>
+								</select>
+								<input class="browser-default" type="email" placeholder="¿Cuál es el email principal?" id="email" disabled>
+								<input class="browser-default" type="email" placeholder="¿Cuál es el email de recuperación?" id="recovery_email" disabled>
+							</div>
+						</div>
+					</div>
 				</div>
 				<div class="b shadow">
 					<div class="opciones">
 						<span>Registrar Usuario</span>
 						<i class="fas fa-check-circle" id="registrar_usuario"></i>
 					</div>
-					<div class="inputs">
+					<div class="progress loader" id="loader_reg_usuario">
+						<div class="indeterminate barra"></div>
+					</div>
+					<div class="inputs" id="form_registro_usuario">
 						<span class="subttitulo">Información personal</span>
 						<div class="input">
 							<input class="browser-default" type="text" placeholder="Nombres" id="reg_names">
@@ -144,7 +175,9 @@
 	<script src="https://www.gstatic.com/firebasejs/5.5.1/firebase-app.js"></script>
 	<script src="https://www.gstatic.com/firebasejs/5.5.1/firebase-auth.js"></script>
 	<script src="https://www.gstatic.com/firebasejs/5.5.9/firebase-firestore.js"></script>
+	<script src="https://www.gstatic.com/firebasejs/5.5.9/firebase-storage.js"></script>
 	<script src="js/firebase_config.js"></script>
+	<script src="js/admin/main.js"></script>
 	<script src="js/admin/usuarios.js"></script>
 </body>
 
