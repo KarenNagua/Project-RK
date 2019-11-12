@@ -1,6 +1,16 @@
 //This script contains functions that can be used in many places
 $('.collapsible').collapsible();
 
+//Click event on btn_menu
+$('.btn_menu').click(function(){
+    alert('click');
+    let bloque = $(this).attr('data-target');
+    if( ! $('#'+bloque).hasClass('active') ) {
+        $('.caja_contenido_principal').removeClass('active');
+        $('#'+bloque).addClass('active');
+    }
+});
+
 //Set Data of actual user in the UI
 function setDataUserInUI(){
     person_list.forEach( p => {
@@ -9,6 +19,28 @@ function setDataUserInUI(){
             $('#user_name').text(p.data.names.split(' ')[0] + ' ' + p.data.surnames.split(' ')[0]);
         }
     });    
+}
+
+//Set Info Counters
+function setContadores(){
+    let total_admin = 0;
+    let total_users = 0;
+    let categories = category_list.legth;
+    let sites = site_list.legth;
+
+    account_list.forEach( a => {
+        if(a.data.type === 0) {
+            total_admin += 1;
+        } else {
+            total_users += 1;
+        }
+    });
+
+    $('#total_admins').text(total_admin);
+    $('#total_users').text(total_users);
+    $('#total_categorias').text(categories);
+    $('#total_sitios').text(sites);
+
 }
 
 //Make an Ajax request and return data through a callback

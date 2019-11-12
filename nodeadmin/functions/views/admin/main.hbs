@@ -34,13 +34,13 @@
 			<span>PROJECTRK</span>
 		</div>
 		<ul class="items">
-			<li class="active item btn_menu" data-target="bloque_usuarios">
+			<li class="active item btn_menu" data-target="caja_usuarios">
 				<div class="centro">
 					<i class="fas fa-user b"></i>
 					<span>Usuarios</span>
 				</div>
 			</li>
-			<li class="item btn_menu">
+			<li class="item btn_menu" data-target="caja_categorias">
 				<div class="centro">
 					<i class="fas fa-tags c"></i>
 					<span>Categorías</span>
@@ -114,7 +114,7 @@
 			</div>
 		</div>
 		<div class="cuerpo">
-			<div class="caja usuarios active" id="caja_usuarios">
+			<div class="caja usuarios active caja_contenido_principal" id="caja_usuarios">
 				<div class="a shadow">
 					<div class="titulo shadow">
 						<span>Usuarios registrados</span>
@@ -183,6 +183,9 @@
 					</div>
 				</div>
 			</div>
+			<div class="caja usuarios caja_contenido_principal" id="caja_categorias">
+				
+			</div>
 		</div>
 	</div>
 
@@ -197,6 +200,8 @@
 		setDataUserInUI();
 		//ADD USERS TO THE LIST VIEW - UI
 		addUsersToListView();
+		//Set info of the four counters
+		setContadores();
 	</script>
 </body>
 

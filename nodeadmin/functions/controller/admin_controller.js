@@ -81,6 +81,36 @@ class AdminController {
             });
     }
 
+    getallAccountsByType( req,res ) {
+        if ( req.query.type ) {
+            db.collection('account').where('type','==',parseInt(req.query.type)).get()
+                .then( data => {
+                    return res.json({code: 0, html: 'Consulta exitosa', accounts: data.docs.map( doc => { return {id: doc.id, data: doc.data()} })});
+                }).catch( error => {
+                    return res.json({code: -1, html: 'Error, no se pudo completar la operación', error: error});
+                });
+        } else {
+            res.json({code:-1, html:'Error, parámetros incompletos'});
+        }
+    }
+
+    getallAccountAndPersonDataByIdAccount( req,res ) {
+        if ( req.query.id ) {
+            db.collection('account').doc(req.query.id).get()
+                .then( da => {
+                    let a = db.collection('person').doc(da.data().id_person).get();
+                    let b = db.collection('account').doc(da.id).get();
+                    return Promise.all([a,b]);
+                }).then( data => {
+                    return res.json({code: 0, html: 'Consulta exitosa', person: {id: data[0].id, data: data[0].data()}, account: {id: data[1].id, data: data[1].data()}});
+                }).catch( error => {
+                    return res.json({code: -1, html: 'Error, no se pudo completar la operación', error: error});
+                });
+        } else {
+            res.json({code:-1, html:'Error, parámetros incompletos'});
+        }
+    }
+
 }
 
 module.exports = AdminController;
