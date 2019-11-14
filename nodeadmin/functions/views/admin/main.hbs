@@ -34,25 +34,25 @@
 			<span>PROJECTRK</span>
 		</div>
 		<ul class="items">
-			<li class="active item btn_menu" data-target="caja_usuarios">
+			<li class="active item menu_item_li btn_menu" id="li_usuario" data-tg="caja_usuarios">
 				<div class="centro">
 					<i class="fas fa-user b"></i>
-					<span>Usuarios</span>
+					<span class="">Usuarios</span>
 				</div>
 			</li>
-			<li class="item btn_menu" data-target="caja_categorias">
+			<li class="item menu_item_li btn_menu" id="li_categorias" data-tg="caja_categorias">
 				<div class="centro">
 					<i class="fas fa-tags c"></i>
-					<span>Categorías</span>
+					<span class="">Categorías</span>
 				</div>
 			</li>
-			<li class="item btn_menu">
+			<li class="item menu_item_li btn_menu" id="li_sitios" data-tg="caja_sitios">
 				<div class="centro">
 					<i class="fas fa-map-marker-alt d"></i>
-					<span>Sitios</span>
+					<span class="">Sitios</span>
 				</div>
 			</li>
-			<li class="item btn_menu">
+			<li class="item" id="btn_logout">
 				<div class="centro">
 					<i class="fas fa-sign-out-alt"></i>
 					<span>Cerrar Sesión</span>
@@ -66,7 +66,7 @@
 				<div class="busqueda shadow">
 					<div class="a">
 						<i class="fas fa-search"></i>
-						<input type="text" class="browser-default" placeholder="Ingresa un texto para buscar" id="input_busqueda">
+						<input type="text" class="browser-default input_search_data" placeholder="Ingresa un texto para buscar" id="input_busqueda" data-collection="person" data-campo="names|surnames" data-lista="lista_usuarios">
 					</div>
 				</div>
 				<div class="perfil">
@@ -183,8 +183,127 @@
 					</div>
 				</div>
 			</div>
-			<div class="caja usuarios caja_contenido_principal" id="caja_categorias">
-				
+			<div class="caja categorias caja_contenido_principal" id="caja_categorias">
+				<div class="a shadow">
+					<div class="titulo shadow">
+						<span>Categorías registradas</span>
+					</div>
+					<div class="lista" id="lista_categorias">
+					</div>
+					<div class="campos">
+						<div class="progress loader beta" id="loader_info_categoria">
+							<div class="indeterminate barra"></div>
+						</div>
+						<div class="inputs" id="form_info_categoria">
+							<span class="subttitulo">Información general</span>
+							<div class="input">
+								<input class="browser-default input_categoria_info" type="text" placeholder="Nombre de la categoría" id="label">
+								<input class="browser-default input_categoria_info" type="text" placeholder="Fecha de registro" id="register_date" disabled>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="b shadow">
+					<div class="opciones shadow">
+						<span>Registrar Categoría</span>
+						<i class="fas fa-check-circle" id="registrar_categoria"></i>
+					</div>
+					<div class="progress loader" id="loader_reg_categoria">
+						<div class="indeterminate barra"></div>
+					</div>
+					<div class="inputs" id="form_registro_categoria">
+						<span class="subttitulo">Información General</span>
+						<div class="input">
+							<input class="browser-default" type="text" placeholder="Nombre de la categoría" id="reg_label">
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="caja sitios caja_contenido_principal" id="caja_sitios">
+				<div class="a shadow">
+					<div class="titulo shadow">
+						<span>Sitios registrados</span>
+					</div>
+					<div class="lista" id="lista_sitios">
+					</div>
+					<div class="campos">
+						<div class="progress loader beta" id="loader_info_sitios">
+							<div class="indeterminate barra"></div>
+						</div>
+						<div class="inputs" id="form_info_sitios">
+							<span class="subttitulo">Información general</span>
+							<div class="input">
+								<input class="browser-default input_sitio_info" type="text" placeholder="Nombre del lugar" id="site_label">
+								<select class="browser-default select_sitio_info" id="id_category">
+									<option value="none" selected disabled>¿A qué categoría pertenece?</option>
+									{{#each category_list as |c i|}}
+										<option value="{{c.id}}">{{c.data.label}}</option>
+									{{/each}}
+								</select>
+								<input class="browser-default input_sitio_info" type="text" placeholder="Descripción" id="description">
+								<input class="browser-default" type="text" placeholder="Fecha de registro" id="site_register_date" disabled>
+							</div>
+							<span class="subttitulo">Dirección</span>
+							<div class="input">
+								<input class="browser-default input_sitio_info" type="text" placeholder="Calle Principal" id="address_main">
+								<input class="browser-default input_sitio_info" type="text" placeholder="Calle Secundaria" id="address_secondary">
+								<input class="browser-default input_sitio_info" type="text" placeholder="Referencia" id="address_reference">
+							</div>
+							<span class="subttitulo">Coordinadas - Latitud</span>
+							<div class="input">
+								<input class="browser-default input_sitio_info" type="text" placeholder="Latitud" id="coordinates_lat">
+							</div>
+							<span class="subttitulo">Coordinadas - Longitud</span>
+							<div class="input">
+								<input class="browser-default input_sitio_info" type="text" placeholder="Longitud" id="coordinates_lng">
+							</div>
+							<span class="subttitulo">Estado</span>
+							<div class="input">
+								<select class="browser-default select_sitio_info" id="estado">
+									<option value="none" selected disabled>¿Cuál es el estado del sitio?</option>
+									<option value="0">Publicado</option>
+									<option value="-1">Dado de baja</option>
+								</select>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="b shadow">
+					<div class="opciones shadow">
+						<span>Registrar Sitio</span>
+						<i class="fas fa-check-circle" id="registrar_sitio"></i>
+					</div>
+					<div class="progress loader" id="loader_reg_sitio">
+						<div class="indeterminate barra"></div>
+					</div>
+					<div class="inputs" id="form_registro_sitio">
+						<span class="subttitulo">Información personal</span>
+						<div class="input">
+							<input class="browser-default" type="text" placeholder="Nombre del lugar" id="reg_site_label">
+							<select class="browser-default" id="reg_id_category">
+								<option value="none" selected disabled>¿A qué categoría pertenece?</option>
+								{{#each category_list as |c i|}}
+									<option value="{{c.id}}">{{c.data.label}}</option>
+								{{/each}}
+							</select>
+							<input class="browser-default" type="text" placeholder="Descripción" id="reg_description">
+						</div>
+						<span class="subttitulo">Dirección</span>
+						<div class="input">
+							<input class="browser-default" type="text" placeholder="Calle Principal" id="reg_address_main">
+							<input class="browser-default" type="text" placeholder="Calle Secundaria" id="reg_address_secondary">
+							<input class="browser-default" type="text" placeholder="Referencia" id="reg_address_reference">
+						</div>
+						<span class="subttitulo">Coordinadas - Latitud</span>
+						<div class="input">
+							<input class="browser-default" type="text" placeholder="Latitud" id="reg_coordinates_lat">
+						</div>
+						<span class="subttitulo">Coordinadas - Longitud</span>
+						<div class="input">
+							<input class="browser-default" type="text" placeholder="Longitud" id="reg_coordinates_lng">
+						</div>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -193,8 +312,11 @@
 	<script src="https://www.gstatic.com/firebasejs/5.5.1/firebase-app.js"></script>
 	<script src="https://www.gstatic.com/firebasejs/5.5.1/firebase-auth.js"></script>
 	<script src="https://www.gstatic.com/firebasejs/5.5.9/firebase-storage.js"></script>
+	<script src="https://www.gstatic.com/firebasejs/5.5.9/firebase-firestore.js"></script>
 	<script src="../js/firebase_config.js"></script>
 	<script src="../js/admin/usuarios.js"></script>
+	<script src="../js/admin/categorias.js"></script>
+	<script src="../js/admin/sitios.js"></script>
 	<script>
 		//Set Data of actual user in UI
 		setDataUserInUI();
@@ -202,6 +324,10 @@
 		addUsersToListView();
 		//Set info of the four counters
 		setContadores();
+		//Add categories to list view
+		setCategoriesToListView();
+		//Add sites to list view
+		addSitesToListView();
 	</script>
 </body>
 

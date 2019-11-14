@@ -316,6 +316,7 @@ body {
     top: 4vw;
     width: 12vw;
     background: #F6F9FC;
+    overflow-y: auto;
 }
 
 .bloque .cuerpo .caja .a .lista .item {
@@ -347,7 +348,7 @@ body {
 
 .bloque .cuerpo .caja .a .lista .item span {
     font-weight: 500;
-    font-size: .8vw;
+    font-size: .79vw;
 }
 
 .bloque .cuerpo .caja .a .campos {

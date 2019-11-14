@@ -16,6 +16,10 @@ firebase.initializeApp(firebaseConfig);
 //Firebase variables
 const auth = firebase.auth(); //Registro e inicio de sesión
 const storage = firebase.storage().ref();
+const db = firebase.firestore(); //Base de datos Firestore
+db.settings({
+	timestampsInSnapshots: true
+});
 
 const type_actual = getTypeAboutPage();
 

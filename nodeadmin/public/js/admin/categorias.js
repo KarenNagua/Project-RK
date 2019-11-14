@@ -1,150 +1,148 @@
 /*
-* Realtime Updates in collection category
+* ADD USERs TO THE LIST VIEW - UI
 */
-$('#lista_categorias').empty();
-db.collection("category")
-    .onSnapshot(function(snapshot) {
-        snapshot.docChanges().forEach(function(change) {
-            console.log(change.doc.data());
-            if (change.type === "added") {
-                //Every time the page is loaded, all documents in the collection are loade here one by one, and this allow to charge content to the UI
-                let doc = change.doc;
-                let html  = '<div id="tag_'+doc.id+'" class="tag item_categoria" data-id="'+doc.id+'">';
-                    html += '   <i class="fas fa-tag"></i>';
-                    html += '   <span id="tag_span_'+doc.id+'">'+doc.data().label+'</span>';
-                    html += '</div>';
-                $('#lista_categorias').append(html);
-            }
-            if (change.type === "modified") {
-                let doc = change.doc;
-                $('#tag_span_'+doc.id).text(doc.data().label);
-            }
-            if (change.type === "removed") {
-                console.log("Removed city: ", change.doc.data());
-            }
-        });
-    });
+function setCategoriesToListView() {
+	$('#lista_categorias').empty();
+	category_list.forEach( category => {
+		let html  = '<div class="item item_lista_categoria" data-category="'+category.id+'">';
+			html += '	<i class="fas fa-tag"></i>';
+			html += '	<span id="label_item_'+category.id+'">'+ category.data.label+'</span>';
+			html += '</div>';	
+		$('#lista_categorias').append(html);
+	});
+}
+	
+var status_proceso_b = false;
+//Detect click on items from users list
+$('body').on('click','.item_lista_categoria',function(){
+	if( !status_proceso_b ) {
+		if( ! $(this).hasClass('active') ) {
+			//Change status process and loader
+			status_proceso_b = true;
+			changeStateLoader('loader_info_categoria', true);
+			//Add background color to the selected list item
+			$('.item_lista_categoria').removeClass('active');
+			$(this).addClass('active');
 
-/*
-* Detect Click event in the elements with class tag
-*/
+			let id_category = $(this).attr('data-category');
+			let { label, register_date } = searchAndReturnObject(category_list, 'id', id_category).data;
 
-function setDataValueToForm(id, value, dataid, datacollection, datacampo, pl){
-    $('#'+id).val(value);
-    $('#'+id).attr('data-id', dataid);
-    $('#'+id).attr('data-collection', datacollection);
-    $('#'+id).attr('data-campo', datacampo);
-    $('#'+id).attr('placeholder', pl);
-};
+			//Clean UI Filed
+			$('#form_info_categoria').find('input').val('');
 
-$('body').on('click', '.tag', function(){
-    let id = $(this).attr('data-id');
-    
-    if (id.length > 0 && !$(this).hasClass('active')) {
-        $('.tag').removeClass('active');
-        $(this).addClass('active');
-        db.collection('category').doc(id).get()
-            .then( data => {
-                if(data) {
-                    console.log(data.data());
-                    $('#data_form_categoria').find('input').val('');
-                    $('#data_form_categoria').find('input').attr('data-id','');
-                    $('#data_form_categoria').find('input').attr('data-collection','');
-                    $('#data_form_categoria').find('input').attr('data-campo','');
-                    
-                    setDataValueToForm('categoria_label', data.data().label, data.id, 'category', '0|label', data.data().label);
-                    setDataValueToForm('categoria_date',  data.data().register_date.toDate(), data.id, '0|category', 'register_date', data.data().register_date.toDate());
-                    
-                } else {
-                    M.toast({html: 'Error, al obtener la iformación'});
-                }
-            }).catch( error => {
-                M.toast({html: 'Error, no se pudo completar la operación'});
-            });
+			//Set Data to UI
+			setCamposTipoB('label', label, id_category, '0|label');
+			let tmp = new firebase.firestore.Timestamp(register_date._seconds, register_date._nanoseconds);
+			setCamposTipoA('register_date', tmp.toDate(), id_category, '0|register_date');
+
+			//Change status process and loader
+			status_proceso_b = false;
+			changeStateLoader('loader_info_categoria', false);
+		}
+	} else {
+		M.toast({html: 'Existe otro proceso en ejecución'});
+	}
+});
+
+function updateFieldSelectOrInputB(tag){
+	if( !status_proceso_b ) {
+		//Change status process and loader
+		status_proceso_b = true;
+		changeStateLoader('loader_info_categoria', true);
+
+		let d = {
+			id_tag: tag.attr('id'),
+			id_category: tag.attr('data-id'),
+			tipo: parseInt(tag.attr('data-target').split('|')[0]),
+			campo: tag.attr('data-target').split('|')[1],
+			new: tag.val(),
+			old: tag.attr('placeholder'),
+		};
+
+		peticionAjaxServidor(d, 'POST', 'json', '/admin/updateCategoryField', data => {
+			if( data.code === 0 ) {
+				setCamposTipoB(d.id_tag, d.new, d.id_category, d.tipo+'|'+d.campo);
+				updateValueFieldOnTheList( category_list, 'id', d.id_category, d.campo, d.new, d.tipo);
+
+				$('#label_item_'+d.id_category).text(d.new);
+			} else {
+				$('#'+d.id_tag).val(d.old);
+			}
+			M.toast({html: data.data});
+
+			//Change status process and loader
+			status_proceso_b = false;
+			changeStateLoader('loader_info_categoria', false);
+		});
+	} else {
+		M.toast({html: 'Existe otro proceso en ejecución'});
+	}
+}
+
+//Detect Enter in input with class input_usuario_info to send data to be updated in Firestore
+$('.input_categoria_info').keypress(function(e){
+    if(e.which == 13){
+		if( $(this).val().length > 0 ) {
+			if($(this).val() !== $(this).attr('placeholder')){
+				updateFieldSelectOrInputB($(this));
+			}
+		} else {
+			$(this).val( $(this).attr('placeholder') );
+		}
+	}
+});
+
+function addCategoryToListViewUI(category) {
+	let html  = '<div class="item item_lista_categoria" data-category="'+category.id+'">';
+		html += '	<i class="fas fa-tag"></i>';
+		html += '	<span id="label_item_'+category.id+'">'+ category.data.label+'</span>';
+		html += '</div>';	
+	$('#lista_categorias').append(html);
+}
+
+//Detect Click evento on button with id registrar_usuario
+$('#registrar_categoria').click(function(){
+    if ( checkFieldsB() ) {
+		changeButtonState('registrar_categoria', true);
+		changeStateLoader('loader_reg_categoria', true);
+
+		let category = getDataCategory();
+		peticionAjaxServidor(category, 'POST', 'json', '/admin/registerCategory', data => {
+			console.log(data);
+			if( data.code === 0 ) {
+				category_list.push(data.category);
+				addCategoryToListViewUI(data.category);
+
+				//Clean all the fileds
+				$('#form_registro_categoria').find('input').val('');
+
+				//Set info of the four counters
+				setContadores();
+			}
+			M.toast({html: data.data});
+
+			//Enable button and hide loader
+			changeButtonState('registrar_categoria', false);
+			changeStateLoader('loader_reg_categoria', false);
+		});
     }
 });
 
-$('.input_form').keypress(function (e) {
-    if(e.which ==13){ 
-        if($(this).val().length > 0) {
-            let d = {
-                valor: $(this).val(),
-                id: $(this).attr('data-id'),
-                collection: $(this).attr('data-collection'),
-                tipo: $(this).attr('data-campo').split('|')[0],
-                campo: $(this).attr('data-campo').split('|')[1],
-                old: $(this).attr('placeholder'),
-            };
+function checkFieldsB(){
+    let status = false;
 
-            db.collection(d.collection).doc(d.id).get()
-                .then( doc => {
-                    let data = doc.data();
-                    if ( d.tipo === '0' ) {
-                        data[d.campo] = d.valor;
-                    }
-                    console.log(data);
-                    return db.collection(d.collection).doc(d.id).set(data);
-                }).then( res => {
-                    M.toast({html: 'Campo actualizado'});
-                }).catch( error => {
-                    M.toast({html: 'Error, no se pudo completar la operación'});
-                });
-
-        } else {
-            $(this).val($(this).attr('placeholder'));
-        }
-    }
-});
-
-$('#reg_categoria').click(function(){
-    let label = $('#reg_categoria_label').val();
-
-    if( label.length > 0 ) {
-        let d = {
-            label: label,
-            register_date: firebase.firestore.FieldValue.serverTimestamp()
-        };
-        db.collection('category').add(d)
-            .then( docRef => {
-                M.toast({html: 'Categoría registrada'});
-                $('#reg_categoria_label').val('');
-            }).catch( error => {
-                console.log(error);
-                M.toast({html: 'Error, no se pudo completar la operación'});
-            });
+    if( ! ($('#reg_label').val().length > 0) ) {
+        M.toast({html: 'Error, debes ingresar el nombre de la categoría'});
     } else {
-        M.toast({html: 'Error, existen campos incompletos'});
+        status = true;
     }
-});
 
-$('#buscar_categoria').click(function(){
-    let label = $('#label_search').val().toLowerCase();
-    if(label.length > 0) {
-        $('#lista_categorias').empty();
-        db.collection('category').get()
-            .then( docs => {
-                docs.forEach( doc => {
-                    if (label === 'todos' || label === 'Todos') {
-                        let html  = '<div id="tag_'+doc.id+'" class="tag item_categoria" data-id="'+doc.id+'">';
-                            html += '   <i class="fas fa-tag"></i>';
-                            html += '   <span id="tag_span_'+doc.id+'">'+doc.data().label+'</span>';
-                            html += '</div>';
-                        $('#lista_categorias').append(html);
-                    } else {
-                        let name = doc.data().label.toLowerCase();
-                        if( name.includes(label) ) {
-                            let html  = '<div id="tag_'+doc.id+'" class="tag item_categoria" data-id="'+doc.id+'">';
-                                html += '   <i class="fas fa-tag"></i>';
-                                html += '   <span id="tag_span_'+doc.id+'">'+doc.data().label+'</span>';
-                                html += '</div>';
-                            $('#lista_categorias').append(html);
-                        }
-                    }
-                });
-            }).catch( error => {
-                M.toast({html: 'Error, no se pudo completar la operación'});
-            });
-    } else {
-        M.toast({html: 'Error, existen campos incompletos'});
-    }
-});
+    return status;
+}
+
+function getDataCategory() {
+    return {
+        label: $('#reg_label').val(),
+        register_date: ''
+    };
+}

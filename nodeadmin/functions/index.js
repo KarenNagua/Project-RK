@@ -63,6 +63,9 @@ app.use('/auth', auth_routes);
 var admin_routes = require('./routes/admin_routes');
 app.use('/admin', admin_routes);
 
+var category_routes = require('./routes/category_routes');
+app.use('/category', category_routes);
+
 /*var cliente_routes = require('./routes/cliente_routes');
 app.use('/cliente', cliente_routes);
 

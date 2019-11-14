@@ -9,6 +9,11 @@ router.get( '/main', admin.main );
 
 router.post( '/updatePersonOrAccountField', admin.updatePersonOrAccountField );
 router.post( '/registerUserAdminOrFinal', admin.registerUserAdminOrFinal );
+router.post( '/registerCategory', admin.registerCategory );
+router.post( '/updateCategoryField', admin.updateCategoryField );
+router.post( '/updateSiteField', admin.updateSiteField );
+router.post( '/registerSite', admin.registerSite );
+
 
 //Admin general EndPoints
 //Allow to get all account about the type seding as parameter in the query,

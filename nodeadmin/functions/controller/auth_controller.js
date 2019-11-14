@@ -3,7 +3,6 @@ const { admin, db, auth } = require('../config/firebase_config');
 
 class AuthController {
 
-    //Type: GET
     checkUserTypeAndRedirect( req, res ) {
         let { uid, type } = req.query;
         if( uid ) {
@@ -24,6 +23,23 @@ class AuthController {
                 });
         } else {
             res.redirect('/');
+        }
+    }
+
+    checkUserDataExist( req,res ) {
+        if( req.query.uid ) {
+            db.collection('account').doc(req.query.uid).get()
+                .then( c => {
+                    if( c ) {
+                        return res.json({code: 0, html: 'El usuario existe', account: { id: c.id, data: c.data() }});
+                    } else {
+                        return res.json({code: -1, html: 'Usuario no registrado'});
+                    }
+                }).catch( e => {
+                    return res.json({code: -1, html: 'Error, no se pudo completar la operación', error: e});
+                });
+        } else {
+            res.json({code: -1, html: 'Error, parámetros incompletos'});
         }
     }
 }

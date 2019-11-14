@@ -77,7 +77,7 @@ class AdminController {
                 return res.json({code:0, data: 'Usuario registrado', account:{id: db[2].id, data: db[2].data()}, person:{id: db[1].id, data: db[1].data()}});
             }).catch( error => {
                 console.log(error);
-                return res.json({code:0, data:'Error, no se pudo completar la operación'});
+                return res.json({code:-1, data:'Error, no se pudo completar la operación'});
             });
     }
 
@@ -109,6 +109,79 @@ class AdminController {
         } else {
             res.json({code:-1, html:'Error, parámetros incompletos'});
         }
+    }
+
+    registerCategory( req, res ){
+        let category = JSON.parse(req.body.data);
+        category.register_date = admin.firestore.FieldValue.serverTimestamp()
+
+        db.collection('category').add(category)
+            .then( cRef => {
+                return db.collection('category').doc(cRef.id).get();
+            }).then( category => {
+                return res.json({code:0, data: 'Categoría registrada', category:{id:category.id, data:category.data()}});
+            }).catch( error => {
+                return res.json({code:-1, data:'Error, no se pudo completar la operación'});
+            });
+    }
+
+    updateCategoryField( req, res ) {
+        let d = JSON.parse(req.body.data);
+
+        db.collection('category').doc(d.id_category).get()
+            .then( doc => {
+                let aux = doc.data();
+                if( d.tipo === 0 ) {
+                    aux[ d.campo ] = d.new;
+                } else if( d.tipo === 1 ){
+                    aux[ d.campo ] = parseInt(d.new);
+                }
+                return db.collection('category').doc(d.id_category).set(aux);
+            }).then( ref => {
+                return res.json({code:0, data:'Campo actualizado'});
+            }).catch( error => {
+                console.log(error);
+                return res.json({code:-1, data:'Error, no se pudo completar la operación'});
+            });
+    }
+
+    updateSiteField( req, res ) {
+        let d = JSON.parse(req.body.data);
+
+        db.collection('site').doc(d.id_site).get()
+            .then( doc => {
+                let aux = doc.data();
+                if( d.tipo === 0 ) {
+                    aux[ d.campo ] = d.new;
+                } else if( d.tipo === 1 ){
+                    aux[ d.campo ] = parseInt(d.new);
+                } else if( d.tipo === 2 ){
+                    aux[ d.campo.split('.')[0] ][ d.campo.split('.')[1] ] = d.new;
+                } else if( d.tipo === 3 ) {
+                    aux[ d.campo.split('.')[0] ][ d.campo.split('.')[1] ] = parseFloat(d.new);
+                } 
+                console.log(aux);
+                return db.collection('site').doc(d.id_site).set(aux);
+            }).then( ref => {
+                return res.json({code:0, data:'Campo actualizado'});
+            }).catch( error => {
+                console.log(error);
+                return res.json({code:-1, data:'Error, no se pudo completar la operación'});
+            });
+    }
+
+    registerSite( req, res ){
+        let site = JSON.parse(req.body.data);
+        site.register_date = admin.firestore.FieldValue.serverTimestamp()
+
+        db.collection('site').add(site)
+            .then( cRef => {
+                return db.collection('site').doc(cRef.id).get();
+            }).then( sitio => {
+                return res.json({code:0, data: 'Sitio registrada', sitio:{id:sitio.id, data:sitio.data()}});
+            }).catch( error => {
+                return res.json({code:-1, data:'Error, no se pudo completar la operación'});
+            });
     }
 
 }

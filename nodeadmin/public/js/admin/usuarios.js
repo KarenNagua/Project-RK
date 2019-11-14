@@ -1,5 +1,3 @@
-const url_createUser = 'https://us-central1-project-f1d8f.cloudfunctions.net/createUserInAuth';
-//logout();
 /*
 * ADD USERs TO THE LIST VIEW - UI
 */
@@ -10,7 +8,7 @@ function addUsersToListView() {
 			if( a.data.id_person === p.id ) {
 				let html  = '<div class="item item_lista_usuarios" data-account="'+a.id+'" data-person="'+p.id+'">';
 					html += '	<i class="fas fa-user"></i>';
-					html += '	<span>'+ p.data.surnames.split(' ')[0] + ' ' + p.data.names.split(' ')[0]+'</span>';
+					html += '	<span id="user_item_'+p.id+'">'+ p.data.surnames.split(' ')[0] + ' ' + p.data.names.split(' ')[0] +'</span>';
 					html += '</div>';	
 				$('#lista_usuarios').append(html);
 			}
@@ -60,7 +58,7 @@ $('body').on('click','.item_lista_usuarios',function(){
 	}
 });
 
-function updateFieldSelectOrInput(tag){
+function updateFieldSelectOrInputA(tag){
 	if( !status_proceso ) {
 		//Change status process and loader
 		status_proceso = true;
@@ -79,6 +77,13 @@ function updateFieldSelectOrInput(tag){
 		peticionAjaxServidor(d, 'POST', 'json', '/admin/updatePersonOrAccountField', data => {
 			if( data.code === 0 ) {
 				setCamposTipoA(d.id_tag, d.new, d.id_account, d.id_person, d.tipo+'|'+d.campo);
+				updateValueFieldOnTheList( (d.tipo === 0)? person_list : account_list, 'id', (d.tipo === 0)? d.id_person : d.id_account, d.campo, d.new, d.tipo);
+
+				if( d.campo === 'names' || d.campo === 'surnames' ) {
+					//user_item_
+					let p = searchAndReturnObject(person_list, 'id', d.id_person);
+					$('#user_item_'+p.id).text(p.data.surnames.split(' ')[0] + ' ' + p.data.names.split(' ')[0]);
+				}
 			} else {
 				$('#'+d.id_tag).val(d.old);
 			}
@@ -98,7 +103,7 @@ $('.input_usuario_info').keypress(function(e){
     if(e.which ==13){
 		if( $(this).val().length > 0 ) {
 			if($(this).val() !== $(this).attr('placeholder')){
-				updateFieldSelectOrInput($(this));
+				updateFieldSelectOrInputA($(this));
 			}
 		} else {
 			$(this).val( $(this).attr('placeholder') );
@@ -108,21 +113,21 @@ $('.input_usuario_info').keypress(function(e){
 
 $('.select_usuario_info').change(function(){
 	if($(this).val() !== $(this).attr('placeholder')){
-		updateFieldSelectOrInput($(this));
+		updateFieldSelectOrInputA($(this));
 	}
 });
 
 function addUserToListViewUI({person,account}) {
 	let html  = '<div class="item item_lista_usuarios" data-account="'+account.id+'" data-person="'+person.id+'">';
 		html += '	<i class="fas fa-user"></i>';
-		html += '	<span>'+ person.data.surnames.split(' ')[0] + ' ' + person.data.names.split(' ')[0]+'</span>';
+		html += '	<span id="user_item_'+p.id+'">'+ person.data.surnames.split(' ')[0] + ' ' + person.data.names.split(' ')[0]+'</span>';
 		html += '</div>';	
 	$('#lista_usuarios').append(html);
 }
 
 //Detect Click evento on button with id registrar_usuario
 $('#registrar_usuario').click(function(){
-    if ( checkFields() ) {
+    if ( checkFieldsA() ) {
 		changeButtonState('registrar_usuario', true);
 		changeStateLoader('loader_reg_usuario', true);
 
@@ -146,6 +151,9 @@ $('#registrar_usuario').click(function(){
 						//Clean all the fileds
 						$('#form_registro_usuario').find('input').val('');
 						$('#form_registro_usuario').find('select').val('none');
+
+						//Set info of the four counters
+						setContadores();
 					}
 					M.toast({html: data.data});
 
@@ -173,7 +181,7 @@ function uploadFileToStorage( file, cb ){
         });  
 }
 
-function checkFields(){
+function checkFieldsA(){
     let status = false;
 
     if( ! ($('#reg_names').val().length > 0) ) {
