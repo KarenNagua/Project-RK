@@ -120,7 +120,7 @@ $('.select_usuario_info').change(function(){
 function addUserToListViewUI({person,account}) {
 	let html  = '<div class="item item_lista_usuarios" data-account="'+account.id+'" data-person="'+person.id+'">';
 		html += '	<i class="fas fa-user"></i>';
-		html += '	<span id="user_item_'+p.id+'">'+ person.data.surnames.split(' ')[0] + ' ' + person.data.names.split(' ')[0]+'</span>';
+		html += '	<span id="user_item_'+person.id+'">'+ person.data.surnames.split(' ')[0] + ' ' + person.data.names.split(' ')[0]+'</span>';
 		html += '</div>';	
 	$('#lista_usuarios').append(html);
 }

@@ -58,7 +58,7 @@ $('body').on('click','.item_lista_sitios',function(){
 	}
 });
 
-function updateFieldSelectOrInputA(tag){
+function updateFieldSelectOrInputC(tag){
 	if( !status_proceso_c ) {
 		//Change status process and loader
 		status_proceso_c = true;
@@ -102,7 +102,7 @@ $('.input_sitio_info').keypress(function(e){
     if(e.which ==13){
 		if( $(this).val().length > 0 ) {
 			if($(this).val() !== $(this).attr('placeholder')){
-				updateFieldSelectOrInputA($(this));
+				updateFieldSelectOrInputC($(this));
 			}
 		} else {
 			$(this).val( $(this).attr('placeholder') );

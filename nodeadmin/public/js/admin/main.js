@@ -126,6 +126,8 @@ function searchSiteByData( { tag, collection, campo, lista_ui, search } ) {
 //Set Data of actual user in the UI
 function setDataUserInUI(){
     person_list.forEach( p => {
+        console.log(account);
+        console.log(p);
         if( account.data.id_person === p.id ) {
             $('#url_picture').attr('src', p.data.picture);
             $('#user_name').text(p.data.names.split(' ')[0] + ' ' + p.data.surnames.split(' ')[0]);

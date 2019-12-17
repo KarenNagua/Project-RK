@@ -16,13 +16,9 @@ class SiteController {
             });
     }
 
-    /*searchSitesByCategoryId( req,res ) {
-
-    }*/
-
-    getCategoriesById( req, res ){
+    getSiteById( req, res ){
         if (req.query.id) {
-            db.collection('category').doc(req.query.id).get()
+            db.collection('sites').doc(req.query.id).get()
                 .then( c => {
                     if( c ) {
                         return res.json({
@@ -41,9 +37,9 @@ class SiteController {
         }
     }
 
-    searchCategoryByLabel( req, res ) {
+    searchSiteByLabel( req, res ) {
         if ( req.query.label ) {
-            db.collection('category').get()
+            db.collection('sites').get()
                 .then( data => {
                     let d = [];
                     data.docs.forEach( doc => {
@@ -63,6 +59,23 @@ class SiteController {
                 }).catch( err => {
                     console.log(err);
                     return res.json({code: -1, html: 'Error, no se pudo completar la operación', error: err});        
+                });
+        } else {
+            res.json({code: -1, html: 'Error, parámetros incompletos'});
+        }
+    }
+
+    getSitesByIdCategory( req, res ){
+        if (req.query.id) {
+            db.collection('sites').where('id_category', '==', req.query.id).get()
+                .then( data => {
+                    return res.json({
+                        code: 0,
+                        html: 'Consulta exitosa',
+                        data: data.docs.map( doc => { return { id: doc.id, data: doc.data() } }),
+                    });
+                }).catch( err => {
+                    return res.json({code: -1, html: 'Error, no se pudo completar la operación', error: err});
                 });
         } else {
             res.json({code: -1, html: 'Error, parámetros incompletos'});

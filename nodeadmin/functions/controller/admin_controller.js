@@ -74,7 +74,8 @@ class AdminController {
                 let c = db.collection('account').doc(da[0].uid).get();
                 return Promise.all([a,b,c]);
             }).then( db => {
-                return res.json({code:0, data: 'Usuario registrado', account:{id: db[2].id, data: db[2].data()}, person:{id: db[1].id, data: db[1].data()}});
+                account.id_person = db[1].id;
+                return res.json({code:0, data: 'Usuario registrado', account:{id: db[2].id, data: account}, person:{id: db[1].id, data: db[1].data()}});
             }).catch( error => {
                 console.log(error);
                 return res.json({code:-1, data:'Error, no se pudo completar la operación'});
