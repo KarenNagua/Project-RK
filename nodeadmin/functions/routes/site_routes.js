@@ -53,6 +53,6 @@ router.get( '/searchSiteByLabel', site.searchSiteByLabel );
  * @apiSuccess {String} html Mensaje de estatus.
  * @apiSuccess {Array}  data Información de los sitios cuyo id_category coincida con el parámetro enviado. Respuesta en formato JSON (en caso de existir).
  */
-router.get( '/searchSiteByLabel', site.searchSiteByLabel );
+router.get( '/getSitesByIdCategory', site.getSitesByIdCategory );
 
 module.exports = router;

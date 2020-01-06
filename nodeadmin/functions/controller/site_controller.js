@@ -4,7 +4,7 @@ const { admin, db, auth } = require('../config/firebase_config');
 class SiteController {
 
     getSites( req, res ) {
-        db.collection('sites').get()
+        db.collection('site').get()
             .then( data => {
                 return res.json({
                     code: 0,
@@ -18,9 +18,9 @@ class SiteController {
 
     getSiteById( req, res ){
         if (req.query.id) {
-            db.collection('sites').doc(req.query.id).get()
+            db.collection('site').doc(req.query.id).get()
                 .then( c => {
-                    if( c ) {
+                    if( c.id && d.data() ) {
                         return res.json({
                             code: 0,
                             html: 'Consulta exitosa',
@@ -39,7 +39,7 @@ class SiteController {
 
     searchSiteByLabel( req, res ) {
         if ( req.query.label ) {
-            db.collection('sites').get()
+            db.collection('site').get()
                 .then( data => {
                     let d = [];
                     data.docs.forEach( doc => {
@@ -67,7 +67,7 @@ class SiteController {
 
     getSitesByIdCategory( req, res ){
         if (req.query.id) {
-            db.collection('sites').where('id_category', '==', req.query.id).get()
+            db.collection('site').where('id_category', '==', req.query.id).get()
                 .then( data => {
                     return res.json({
                         code: 0,

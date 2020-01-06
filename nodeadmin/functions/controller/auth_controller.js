@@ -30,7 +30,8 @@ class AuthController {
         if( req.query.uid ) {
             db.collection('account').doc(req.query.uid).get()
                 .then( c => {
-                    if( c ) {
+                    console.log(c);
+                    if( c.id && c.data() ) {
                         return res.json({code: 0, html: 'El usuario existe', account: { id: c.id, data: c.data() }});
                     } else {
                         return res.json({code: -1, html: 'Usuario no registrado'});
