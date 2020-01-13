@@ -20,7 +20,7 @@ class SiteController {
         if (req.query.id) {
             db.collection('site').doc(req.query.id).get()
                 .then( c => {
-                    if( c.id && d.data() ) {
+                    if( c.id && c.data() ) {
                         return res.json({
                             code: 0,
                             html: 'Consulta exitosa',
@@ -30,6 +30,7 @@ class SiteController {
                         return res.json({ code: 0, html: 'No existen registros con el ID ' + req.query.id, data: [] });
                     }
                 }).catch( err => {
+                    console.log(err);
                     return res.json({code: -1, html: 'Error, no se pudo completar la operación', error: err});
                 });
         } else {
