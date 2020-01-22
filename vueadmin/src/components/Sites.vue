@@ -103,17 +103,26 @@
         </div>
       </div>
     </div>
+    <div :class="btn_favorites" @click="showOnlyFavoritesSites">
+      <font-awesome-icon :icon="['fas', 'heart']" class="icon" />
+    </div>
     <div class="slider">
       <div :key="s.id" v-for="s in data.sites" class="site shadow" :id="s.id">
         <div class="card">
           <div class="name">
             <span>{{ s.data.label }}</span>
             <font-awesome-icon
-              v-if="s.is_favotire"
+              v-if="s.is_favorite"
               :icon="['fas', 'heart']"
               class="icon"
+              @click="removeSiteToFavorites(s)"
             />
-            <font-awesome-icon v-else :icon="['far', 'heart']" class="icon" />
+            <font-awesome-icon
+              v-else
+              :icon="['far', 'heart']"
+              class="icon"
+              @click="addSiteToFavorites(s)"
+            />
           </div>
           <div class="actions">
             <div class="button a" @click="locateSite(s.id)">
@@ -277,6 +286,33 @@
   padding: 2vw 2vw;
   user-select: none;
 }
+.btn_favoritos {
+  position: absolute;
+  z-index: 200;
+  bottom: 11.2vw;
+  left: 1vw;
+  width: 2vw;
+  height: 2vw;
+  font-size: 0.9vw;
+  background: #000;
+  color: #fff;
+  border-radius: 0.5vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s 0.2s;
+}
+.btn_favoritos:active {
+  transform: scale(0.90);
+}
+.btn_favoritos.active {
+  background: #f53c56;
+  transition: all 0.2s 0.2s;
+}
+.btn_favoritos .icon {
+
+}
 .slider .site {
   position: relative;
   background: #fff;
@@ -312,6 +348,7 @@
   margin-left: 1vw;
   font-size: 1.1vw;
   cursor: pointer;
+  color: #f53c56;
 }
 .slider .site .card .name .icon:active {
   transform: scale(0.96);
@@ -428,7 +465,9 @@
 </style>
 
 <script>
+import { firebase } from "../config/app";
 import { db } from "../config/db";
+import { mapGetters } from "vuex";
 export default {
   data: function() {
     return {
@@ -438,6 +477,11 @@ export default {
         sites: [],
         sites_copy: [],
         favorites: []
+      },
+      btn_favorites: {
+        btn_favoritos: true,
+        shadow: true,
+        active: false
       },
       map: {
         zoom: 14,
@@ -563,6 +607,7 @@ export default {
       return data;
     },
     submitSearchForm() {
+      this.btn_favorites.active = false;
       let data = this.getSitesByCategory({
         id: this.$refs.select_category.value.split("_")[0],
         label: this.$refs.select_category.value.split("_")[1]
@@ -576,7 +621,102 @@ export default {
       this.search.bar_class.focused = status;
       this.search.category_class.focused = status;
     },
-    addSiteToFavorites() {},
+    changeSiteFavoriteStatus(id, status) {
+      this.data.sites_copy.forEach(s => {
+        if (s.id === id) {
+          s.is_favorite = status;
+        }
+      });
+      this.data.sites.forEach(s => {
+        if (s.id === id) {
+          s.is_favorite = status;
+        }
+      });
+    },
+    checkSiteFavoriteStatus(id) {
+      let status = false;
+      this.data.favorites.forEach(f => {
+        if (f.data.id_site === id) {
+          status = true;
+        }
+      });
+      return status;
+    },
+    getFavoriteWithSiteId(id) {
+      let favorite = null;
+      this.data.favorites.forEach(f => {
+        if (f.data.id_site === id) {
+          favorite = f;
+        }
+      });
+      return favorite;
+    },
+    deleteItemFromFavoriteList({ id, data }) {
+      let index = -1;
+      this.data.favorites.forEach((f, i) => { 
+        if (f.id === id) {
+          index = i;
+        }
+      });
+      if (index !== -1) {
+        this.data.favorites.splice(index, 1);
+      }
+
+      if (this.btn_favorites.active) {
+        let index = -1;
+        this.data.sites.forEach((s, i) => {
+          if (s.id === data.id_site) {
+            index = i;
+          }
+        });
+        if (index != -1) {
+          this.data.sites.splice(index, 1);
+        }
+      }
+    },
+    showOnlyFavoritesSites() {
+      if (this.btn_favorites.active) {
+        this.btn_favorites.active = false;
+        this.data.sites = this.data.sites_copy;
+      } else {
+        let data = [];
+        this.data.sites_copy.forEach(s => {
+          let f = this.getFavoriteWithSiteId(s.id);
+          if (f !== null) {
+            data.push(s);
+          }
+        });
+        this.btn_favorites.active = true;
+        this.data.sites = data;
+      }
+    },
+    addSiteToFavorites: async function({ id }) {
+      let favorite = {
+        id_site: id,
+        id_account: this.user.account.id,
+        id_person: this.user.person.id,
+        register_date: firebase.serverTimestamp
+      };
+      let docref = await db.collection("mysites").add(favorite);
+      let doc = await db
+        .collection("mysites")
+        .doc(docref.id)
+        .get();
+      this.data.favorites.push({
+        id: doc.id,
+        data: doc.data()
+      });
+      this.changeSiteFavoriteStatus(id, true);
+    },
+    removeSiteToFavorites: async function({ id }) {
+      let favorite = this.getFavoriteWithSiteId(id);
+      await db
+        .collection("mysites")
+        .doc(favorite.id)
+        .delete();
+      this.deleteItemFromFavoriteList(favorite);
+      this.changeSiteFavoriteStatus(id, false);
+    },
     geolocate: function() {
       navigator.geolocation.getCurrentPosition(position => {
         this.map.center = {
@@ -588,8 +728,8 @@ export default {
     },
     getFavorites: async function() {
       let data = await db
-        .collection("favorite")
-        .where("uid", "==", this.$store.state.user.data.id)
+        .collection("mysites")
+        .where("id_account", "==", this.user.account.id)
         .get();
       data.forEach(f => {
         this.data.favorites.push({
@@ -619,7 +759,7 @@ export default {
         this.data.sites.push({
           id: site.id,
           data: site.data(),
-          is_favorite: false //Check favorite
+          is_favorite: this.checkSiteFavoriteStatus(site.id) //Check favorite
         });
         const marker = {
           lat: site.data().coordinates.lat,
@@ -636,6 +776,11 @@ export default {
       });
       this.data.sites_copy = this.data.sites;
     }
+  },
+  computed: {
+    ...mapGetters({
+      user: "alldata"
+    })
   }
 };
 </script>

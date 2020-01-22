@@ -147,8 +147,7 @@ export default {
     submit() {
       auth
         .signInWithEmailAndPassword(this.form.email, this.form.password)
-        .then(user => {
-          console.log(user);
+        .then(() => {
           this.$router.push({ path: "/mainview" });
         })
         .catch(err => {
