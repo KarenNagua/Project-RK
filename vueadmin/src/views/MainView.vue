@@ -1,39 +1,44 @@
 <template>
-  <div class="container">
-    <div class="row justify-content-center">
-      <div class="col-md-8">
-        <div class="card">
-          <div class="card-header">Página principal</div>
-          <div class="card-body">            
-            <div v-if="user" class="alert alert-success" role="alert">Estas logeado!</div>
-            <div v-else class="alert alert-success" role="alert">No estas logeado!</div>
-          </div>
-        </div>
-      </div>
+  <div class="boxes">
+    <div class="box a">
+      <Sidenav></Sidenav>
+    </div>
+    <div class="box b">
+      <Sites></Sites>
     </div>
   </div>
 </template>
 
 <style>
-.container {
-  margin-top: 5vw;
-  height: calc(100vh - 5vw);
+.boxes {
+  background: red;
+  position: relative;
   width: 100%;
+  height: 100vh;
   display: flex;
-  align-items: center;
-  justify-content: center;
+  flex-flow: row;
+}
+.box.a {
+  background: blue;
+  width: 19%;
+  height: 100vh;
+}
+.box.b {
+  background: green;
+  width: 81%;
+  height: 100vh;
 }
 </style>
 
 <script>
-import { mapGetters } from "vuex";
+import Sidenav from "../components/Sidenav";
+import Sites from "../components/Sites";
 
 export default {
   name: "mainview",
-  computed: {
-    ...mapGetters({
-      user: "user"
-    })
+  components: {
+    Sidenav,
+    Sites
   }
 };
 </script>

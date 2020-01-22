@@ -7,12 +7,23 @@ export default new Vuex.Store({
   state: {
     user: {
       loggedIn: false,
-      data: null
+      data: null,
+      account: null,
+      person: null
     }
   },
   getters: {
-    user(state) {
+    alldata(state) {
       return state.user;
+    },
+    user(state) {
+      return state.user.data;
+    },
+    account(state) {
+      return state.user.account;
+    },
+    person(state) {
+      return state.user.person;
     }
   },
   mutations: {
@@ -21,6 +32,12 @@ export default new Vuex.Store({
     },
     SET_USER(state, data) {
       state.user.data = data;
+    },
+    SET_ACCOUNT(state, data) {
+      state.user.account = data;
+    },
+    SET_PERSON(state, data) {
+      state.user.person = data;
     }
   },
   actions: {
@@ -33,6 +50,26 @@ export default new Vuex.Store({
         });
       } else {
         commit("SET_USER", null);
+      }
+    },
+    fetchAccount({ commit }, account) {
+      if (account) {
+        commit("SET_ACCOUNT", {
+          id: account.id,
+          data: account.data()
+        });
+      } else {
+        commit("SET_ACCOUNT", null);
+      }
+    },
+    fetchPerson({ commit }, person) {
+      if (person) {
+        commit("SET_PERSON", {
+          id: person.id,
+          data: person.data()
+        });
+      } else {
+        commit("SET_PERSON", null);
       }
     }
   }
