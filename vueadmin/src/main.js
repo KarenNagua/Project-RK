@@ -23,6 +23,7 @@ import {
   faSearch,
   faStar,
   faHeart,
+  faCamera
 } from "@fortawesome/free-solid-svg-icons";
 import { faHeart as farHeart } from "@fortawesome/free-regular-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
@@ -42,7 +43,8 @@ library.add(
   faSearch,
   faStar,
   faHeart,
-  farHeart
+  farHeart,
+  faCamera
 );
 Vue.component("font-awesome-icon", FontAwesomeIcon);
 
@@ -72,16 +74,17 @@ auth.onAuthStateChanged(async user => {
         store.dispatch("fetchUser", user);
         store.dispatch("fetchAccount", account);
         store.dispatch("fetchPerson", person);
+        router.push({ path: "/mainview" });
       } else {
-        store.dispatch("fetchUser", user);
-        store.dispatch("fetchAccount", account);
-        store.dispatch("fetchPerson", null);
+        await auth.signOut();
       }
     } else {
-      store.dispatch("fetchUser", user);
-      store.dispatch("fetchAccount", null);
-      store.dispatch("fetchPerson", null);
+      await auth.signOut();
     }
+  } else {
+    store.dispatch("fetchUser", null);
+    store.dispatch("fetchAccount", null);
+    store.dispatch("fetchPerson", null);
   }
   if (!app) {
     app = new Vue({

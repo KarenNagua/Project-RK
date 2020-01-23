@@ -132,6 +132,7 @@
 
 <script>
 import { auth } from "../config/auth";
+import { db } from "../config/db";
 
 export default {
   data() {
@@ -144,11 +145,32 @@ export default {
     };
   },
   methods: {
-    submit() {
+    submit: function() {
       auth
         .signInWithEmailAndPassword(this.form.email, this.form.password)
-        .then(() => {
-          this.$router.push({ path: "/mainview" });
+        .then(async user => {
+          console.log(user.user.uid);
+          let account = await db
+            .collection("account")
+            .doc(user.user.uid)
+            .get();
+          console.log(account);
+          if (account) {
+            if (account.data().state === 0) {
+              this.$router.push({ path: "/mainview" });
+            } else {
+              if (account.data().state === 1) {
+                alert(
+                  "Error, tu cuenta se encuentra bloqueada, por favor comunicate con el administrador"
+                );
+              } else {
+                alert(
+                  "Error, tu cuenta ya no existe, por favor comunicate con el administrador"
+                );
+              }
+              await auth.signOut();
+            }
+          }
         })
         .catch(err => {
           this.error = err.mesagge;

@@ -2,25 +2,29 @@
   <div class="sidenav shadow">
     <div class="user">
       <div class="picture">
-        <img :src="user.person.data.picture" class="shadow" />
+        <img
+          v-if="user.person"
+          :src="user.person.data.picture"
+          class="shadow"
+        />
       </div>
-      <span class="name">{{
+      <span v-if="user.person" class="name">{{
         user.person.data.names.split(" ")[0] +
           " " +
           user.person.data.surnames.split(" ")[0]
       }}</span>
-      <span class="email">{{ user.data.email }}</span>
+      <span v-if="user.person" class="email">{{ user.data.email }}</span>
     </div>
     <div class="nav">
-      <div class="item active">
+      <div :class="menu.sitios" @click="changeSection(0)">
         <font-awesome-icon :icon="['fas', 'map-marked']" class="icon" />
         Sitios
       </div>
-      <div class="item">
+      <div :class="menu.profile" @click="changeSection(1)">
         <font-awesome-icon :icon="['fas', 'user']" class="icon" />
         Mi Perfil
       </div>
-      <div class="item">
+      <div class="item" @click="logout">
         <font-awesome-icon :icon="['fas', 'sign-out-alt']" class="icon" />
         Cerrar Sesión
       </div>
@@ -116,12 +120,19 @@
 
 <script>
 import { mapGetters } from "vuex";
+import { auth } from "../config/auth";
 export default {
   data: function() {
     return {
-      nav: {
-        sites: true,
-        profile: false
+      menu: {
+        sitios: {
+          item: true,
+          active: true
+        },
+        profile: {
+          item: true,
+          active: false
+        }
       },
       error: null
     };
@@ -130,6 +141,28 @@ export default {
     ...mapGetters({
       user: "alldata"
     })
+  },
+  methods: {
+    changeSection(index) {
+      if (index === 0) {
+        this.menu.profile.active = false;
+        this.$parent.side.profile = false;
+        this.menu.sitios.active = true;
+        this.$parent.side.sites = true;
+      } else if (index === 1) {
+        this.menu.sitios.active = false;
+        this.$parent.side.sites = false;
+        this.menu.profile.active = true;
+        this.$parent.side.profile = true;
+      }
+    },
+    logout: async function() {
+      //store.dispatch("fetchUser", user);
+      //store.dispatch("fetchAccount", account);
+      //store.dispatch("fetchPerson", person);
+      await auth.signOut();
+      this.$router.push({ path: "/" });
+    }
   }
 };
 </script>

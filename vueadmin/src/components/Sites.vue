@@ -727,16 +727,18 @@ export default {
       });
     },
     getFavorites: async function() {
-      let data = await db
-        .collection("mysites")
-        .where("id_account", "==", this.user.account.id)
-        .get();
-      data.forEach(f => {
-        this.data.favorites.push({
-          id: f.id,
-          data: f.data()
+      if (this.user.account) {
+        let data = await db
+          .collection("mysites")
+          .where("id_account", "==", this.user.account.id)
+          .get();
+        data.forEach(f => {
+          this.data.favorites.push({
+            id: f.id,
+            data: f.data()
+          });
         });
-      });
+      }
     },
     getCategories: async function() {
       let data = await db
