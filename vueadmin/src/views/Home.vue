@@ -4,16 +4,12 @@
     <div class="bac_color"></div>
     <div class="intro">
       <div class="centro">
-        <span class="a">PROJECTRTK</span>
-        <span class="b"
-          >Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusamus
-          sit aliquam dignissimos dolore facilis quasi nemo error distinctio
-          explicabo, harum dolorum, nobis sed. Assumenda accusantium ipsum quo a
-          eius voluptates. Lorem ipsum dolor sit amet consectetur adipisicing
-          elit. Et, consequuntur quae. Cupiditate eius hic iusto ipsum quidem
-          inventore obcaecati debitis fuga illo, consequatur similique magnam ex
-          iste aperiam quod repellat.</span
-        >
+        <span class="a">Welcome to</span>
+        <span class="aa">Project RK</span>
+        <span class="b">
+          The best way to know, find and discover new places around you. Let's
+          start!
+        </span>
       </div>
     </div>
     <Login></Login>
@@ -73,12 +69,19 @@ body {
   font-family: "Noto Sans", sans-serif;
   font-size: 2.5vw;
   font-weight: 700;
-  margin-bottom: 0.7vw;
+  line-height: 2.5vw;
+}
+.caja .intro .centro span.aa {
+  font-family: "Noto Sans", sans-serif;
+  font-size: 4.5vw;
+  font-weight: 700;
+  margin-bottom: 1.3vw;
+  line-height: 4.5vw;
 }
 .caja .intro .centro span.b {
   font-family: "Noto Sans", sans-serif;
-  text-align: left;
-  font-size: 1vw;
+  text-align: justify;
+  font-size: 1.45vw;
 }
 </style>
 
