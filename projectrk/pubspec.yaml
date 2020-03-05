@@ -1,0 +1,29 @@
+name: projectrk
+description: A new Flutter application.
+
+version: 1.0.0+1
+
+environment:
+  sdk: ">=2.1.0 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  firebase_auth: ^0.15.4
+  cloud_firestore: ^0.13.0+1
+  firebase_storage: ^3.1.3
+  font_awesome_flutter: ^8.5.0
+  google_maps_flutter: ^0.5.24+1
+  geolocator: ^5.1.4+2
+  cupertino_icons: ^0.1.2
+  image_picker: ^0.6.3+4
+  path: ^1.6.4
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/
