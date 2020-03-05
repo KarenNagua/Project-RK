@@ -125,7 +125,7 @@ class _CuentaState extends State<Cuenta> with TickerProviderStateMixin {
 
     Widget _normalAppBar(){
       return AppBar(
-        backgroundColor: Color(0xFF3ACCE1),
+        backgroundColor: Color(0xFF454F63),
         automaticallyImplyLeading: false,
         centerTitle: true,
         leading: IconButton(
@@ -150,6 +150,7 @@ class _CuentaState extends State<Cuenta> with TickerProviderStateMixin {
             padding: EdgeInsets.all(15),
             child: CircularProgressIndicator(
               strokeWidth: 1.5,
+              backgroundColor: Colors.white,
             ),
           )
           : this._canEdit ?
@@ -182,9 +183,9 @@ class _CuentaState extends State<Cuenta> with TickerProviderStateMixin {
               // Add one stop for each color. Stops should increase from 0 to 1
               stops: [0.0, 0.4, 1.0],
               colors: [
-                new Color(0xFF3ACCE1),
-                new Color(0xFF3ACCE1),
-                new Color(0xFF3ACCE1)
+                new Color(0xFF454F63),
+                new Color(0xFF454F63),
+                new Color(0xFF454F63)
               ],
               tileMode: TileMode.clamp,
             ),
@@ -210,10 +211,10 @@ class _CuentaState extends State<Cuenta> with TickerProviderStateMixin {
                 borderSide: BorderSide(color: Color(0xFFFFFFFF)),
                 borderRadius: BorderRadius.circular(15.0)),
             enabledBorder: OutlineInputBorder(
-                borderSide: BorderSide(color: Color(0xFF3ACCE1)),
+                borderSide: BorderSide(color: Color(0xFF454F63)),
                 borderRadius: BorderRadius.circular(15.0)),
             focusedBorder: OutlineInputBorder(
-                borderSide: BorderSide(color: Color(0xFF3ACCE1)),
+                borderSide: BorderSide(color: Color(0xFF454F63)),
                 borderRadius: BorderRadius.circular(15.0)),
             errorBorder: OutlineInputBorder(
                 borderSide: BorderSide(color: Colors.red.withOpacity(0.6)),
@@ -227,7 +228,7 @@ class _CuentaState extends State<Cuenta> with TickerProviderStateMixin {
             ),
             labelText: label,
             labelStyle: TextStyle(
-                color: Color(0xFF3ACCE1), fontWeight: FontWeight.w600),
+                color: Color(0xFF454F63), fontWeight: FontWeight.w600),
             contentPadding:
             EdgeInsets.only(left: 15, right: 15, top: 16, bottom: 16),
           ),
@@ -265,44 +266,60 @@ class _CuentaState extends State<Cuenta> with TickerProviderStateMixin {
             padding: EdgeInsets.zero,
             children: <Widget>[
               DrawerHeader(
+                padding: EdgeInsets.only(left: 25),
                 child: this._cuenta != null && this._persona != null ?
-                  Column(
-                    mainAxisSize: MainAxisSize.max,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: <Widget>[
-                      Container(
-                        width: 75,
-                        height: 75,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(50),
-                            image: this._persona.picture.length > 0 ? DecorationImage(
-                                image: NetworkImage(
-                                  this._persona.picture,
-                                ),
-                                fit: BoxFit.cover
-                            ) : null
-                        ),
+                Column(
+                  mainAxisSize: MainAxisSize.max,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Container(
+                      width: 70,
+                      height: 70,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(14),
+                          image: this._persona.picture.length > 0 ? DecorationImage(
+                              image: NetworkImage(
+                                this._persona.picture,
+                              ),
+                              fit: BoxFit.cover
+                          ) : null
                       ),
-                      Padding(
-                        padding: EdgeInsets.only(top: 8),
-                        child: Text(
-                          this._persona.names.split(" ")[0] + " " + this._persona.surnames.split(" ")[0],
-                          style: TextStyle(
+                    ),
+                    Padding(
+                      padding: EdgeInsets.only(top: 8),
+                      child: Text(
+                        this._persona.names.split(" ")[0] + " " + this._persona.surnames.split(" ")[0],
+                        style: TextStyle(
                             color: Colors.white,
                             fontWeight: FontWeight.bold,
-                            fontSize: 15
-                          ),
+                            fontSize: 16
                         ),
-                      )
-                    ],
-                  ) : Container(
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.only(top: 1),
+                      child: Text(
+                        this._cuenta.email,
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 11
+                        ),
+                      ),
+                    )
+                  ],
+                ) : Container(
                   child: Center(
                     child: CircularProgressIndicator(),
                   ),
                 ),
                 decoration: BoxDecoration(
-                  color: Color(0xFF3ACCE1),
+                  image: DecorationImage(
+                    fit: BoxFit.cover,
+                    colorFilter: new ColorFilter.mode(
+                        Color(0xFF2E3649), BlendMode.hue),
+                    image: AssetImage("assets/fondo_barra.png"),
+                  ),
                 ),
               ),
               ListTile(

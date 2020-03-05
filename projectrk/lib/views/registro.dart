@@ -37,7 +37,7 @@ class _RegistroPageState extends State<RegistroPage> {
           'Regístrate',
           textAlign: TextAlign.center,
           style: TextStyle(
-              color: Color(0xFF3ACCE1),
+              color: Color(0xFF2A2E43),
               fontWeight: FontWeight.w800,
               fontSize: 28.0),
         ),
@@ -61,10 +61,10 @@ class _RegistroPageState extends State<RegistroPage> {
                 borderSide: BorderSide(color: Color(0xFFFFFFFF)),
                 borderRadius: BorderRadius.circular(15.0)),
             enabledBorder: OutlineInputBorder(
-                borderSide: BorderSide(color: Color(0xFF3ACCE1)),
+                borderSide: BorderSide(color: Color(0xFF2A2E43)),
                 borderRadius: BorderRadius.circular(15.0)),
             focusedBorder: OutlineInputBorder(
-                borderSide: BorderSide(color: Color(0xFF3ACCE1)),
+                borderSide: BorderSide(color: Color(0xFF2A2E43)),
                 borderRadius: BorderRadius.circular(15.0)),
             errorBorder: OutlineInputBorder(
                 borderSide: BorderSide(color: Colors.red.withOpacity(0.6)),
@@ -78,7 +78,7 @@ class _RegistroPageState extends State<RegistroPage> {
             ),
             labelText: label,
             labelStyle: TextStyle(
-                color: Color(0xFF3ACCE1), fontWeight: FontWeight.w600),
+                color: Color(0xFF2A2E43), fontWeight: FontWeight.w600),
             contentPadding:
                 EdgeInsets.only(left: 15, right: 15, top: 16, bottom: 16),
           ),
@@ -208,7 +208,7 @@ class _RegistroPageState extends State<RegistroPage> {
               builder: (bcontext) => Form(
                 key: _formKey,
                 child: Container(
-                  padding: EdgeInsets.only(left: 28, right: 28, bottom: 40),
+                  padding: EdgeInsets.only(top: 30, left: 28, right: 28, bottom: 0),
                   width: MediaQuery.of(context).size.width,
                   height: MediaQuery.of(context).size.height,
                   decoration: BoxDecoration(

@@ -38,7 +38,7 @@ class _LoginPageState extends State<LoginPage> {
           'Inicia Sesión',
           textAlign: TextAlign.center,
           style: TextStyle(
-              color: Color(0xFF3ACCE1),
+              color: Color(0xFF2A2E43),
               fontWeight: FontWeight.w800,
               fontSize: 20.0),
         ),
@@ -62,10 +62,10 @@ class _LoginPageState extends State<LoginPage> {
                 borderSide: BorderSide(color: Color(0xFFFFFFFF)),
                 borderRadius: BorderRadius.circular(15.0)),
             enabledBorder: OutlineInputBorder(
-                borderSide: BorderSide(color: Color(0xFF3ACCE1)),
+                borderSide: BorderSide(color: Color(0xFF2A2E43)),
                 borderRadius: BorderRadius.circular(15.0)),
             focusedBorder: OutlineInputBorder(
-                borderSide: BorderSide(color: Color(0xFF3ACCE1)),
+                borderSide: BorderSide(color: Color(0xFF2A2E43)),
                 borderRadius: BorderRadius.circular(15.0)),
             errorBorder: OutlineInputBorder(
                 borderSide: BorderSide(color: Colors.red.withOpacity(0.6)),
@@ -79,7 +79,7 @@ class _LoginPageState extends State<LoginPage> {
             ),
             labelText: label,
             labelStyle: TextStyle(
-                color: Color(0xFF3ACCE1), fontWeight: FontWeight.w600),
+                color: Color(0xFF2A2E43), fontWeight: FontWeight.w600),
             contentPadding:
             EdgeInsets.only(left: 15, right: 15, top: 16, bottom: 16),
           ),
@@ -179,7 +179,7 @@ class _LoginPageState extends State<LoginPage> {
                   width: MediaQuery.of(context).size.width,
                   height: MediaQuery.of(context).size.height,
                   decoration: BoxDecoration(
-                    color: Color(0xffFFFFFF),
+                    color: Colors.white
                   ),
                   child: Column(
                     mainAxisSize: MainAxisSize.max,

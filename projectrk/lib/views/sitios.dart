@@ -31,7 +31,10 @@ class _SitiosState extends State<Sitios> with TickerProviderStateMixin {
   GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
 
   Completer<GoogleMapController> _controller = Completer();
-  CameraPosition _cameraPosition;
+  CameraPosition _cameraPosition = CameraPosition(
+      target: LatLng(-4.001387, -79.207213),
+      zoom: 13.0
+  );
 
   //Set<Marker> _markers = Set();
   List<Marker> _markers = [];
@@ -194,7 +197,7 @@ class _SitiosState extends State<Sitios> with TickerProviderStateMixin {
 
     Widget _normalAppBar(){
       return AppBar(
-        backgroundColor: Color(0xFF3ACCE1),
+        backgroundColor: Color(0xFF2A2E43),
         automaticallyImplyLeading: false,
         centerTitle: true,
         leading: IconButton(
@@ -221,9 +224,9 @@ class _SitiosState extends State<Sitios> with TickerProviderStateMixin {
               // Add one stop for each color. Stops should increase from 0 to 1
               stops: [0.0, 0.4, 1.0],
               colors: [
-                new Color(0xFF3ACCE1),
-                new Color(0xFF3ACCE1),
-                new Color(0xFF3ACCE1)
+                new Color(0xFF2A2E43),
+                new Color(0xFF2A2E43),
+                new Color(0xFF2A2E43)
               ],
               tileMode: TileMode.clamp,
             ),
@@ -243,17 +246,18 @@ class _SitiosState extends State<Sitios> with TickerProviderStateMixin {
             padding: EdgeInsets.zero,
             children: <Widget>[
               DrawerHeader(
+                padding: EdgeInsets.only(left: 25),
                 child: this._cuenta != null && this._persona != null ?
                   Column(
                     mainAxisSize: MainAxisSize.max,
                     mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       Container(
-                        width: 75,
-                        height: 75,
+                        width: 70,
+                        height: 70,
                         decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(50),
+                          borderRadius: BorderRadius.circular(14),
                           image: this._persona.picture.length > 0 ? DecorationImage(
                               image: NetworkImage(
                                 this._persona.picture,
@@ -269,7 +273,17 @@ class _SitiosState extends State<Sitios> with TickerProviderStateMixin {
                           style: TextStyle(
                             color: Colors.white,
                             fontWeight: FontWeight.bold,
-                            fontSize: 15
+                            fontSize: 16
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(top: 1),
+                        child: Text(
+                          this._cuenta.email,
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 11
                           ),
                         ),
                       )
@@ -280,7 +294,12 @@ class _SitiosState extends State<Sitios> with TickerProviderStateMixin {
                   ),
                 ),
                 decoration: BoxDecoration(
-                  color: Color(0xFF3ACCE1),
+                  image: DecorationImage(
+                    fit: BoxFit.cover,
+                    colorFilter: new ColorFilter.mode(
+                        Color(0xFF2E3649), BlendMode.hue),
+                    image: AssetImage("assets/fondo_barra.png"),
+                  ),
                 ),
               ),
               ListTile(
@@ -348,7 +367,7 @@ class _SitiosState extends State<Sitios> with TickerProviderStateMixin {
               alignment: Alignment.bottomCenter,
               child: Container(
                 width: MediaQuery.of(context).size.width,
-                height: MediaQuery.of(context).size.height * 0.24,
+                height: MediaQuery.of(context).size.height * 0.28,
                 padding: EdgeInsets.all(10),
                 decoration: BoxDecoration(
                   color: Colors.white70
@@ -361,43 +380,47 @@ class _SitiosState extends State<Sitios> with TickerProviderStateMixin {
                     Site aux = this._sitios.values.toList().elementAt(index);
                     print(aux);
                     return Container(
-                      width: (MediaQuery.of(context).size.width * 0.55) - 18,
+                      width: (MediaQuery.of(context).size.width * 0.70),
                       height: MediaQuery.of(context).size.height,
-                      margin: EdgeInsets.only(left: 4, right: 4),
+                      margin: EdgeInsets.only(left: 8, right: 8),
+                      padding: EdgeInsets.only(bottom: 20, left: 20, right: 20),
                       decoration: BoxDecoration(
-                        color: Color(0xFFf2f2f2),
-                        borderRadius: BorderRadius.circular(12.0)
+                        shape: BoxShape.rectangle,
+                        borderRadius: BorderRadius.circular(28),
+                        image: DecorationImage(
+                          image: AssetImage("assets/site.png"),
+                          fit: BoxFit.cover,
+                        )
                       ),
                       child: Stack(
                         children: <Widget>[
                           Column(
                             mainAxisSize: MainAxisSize.max,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[
                               Container(
-                                  height: 80,
-                                  child: Center(
-                                    child: Text(
-                                      aux.label,
-                                      textAlign: TextAlign.center,
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.w700,
-                                          fontSize: 18,
-                                          color: Colors.blueGrey
-                                      ),
-                                    ),
-                                  )
+                                padding: EdgeInsets.only(bottom: 12),
+                                child: Text(
+                                  aux.label,
+                                  textAlign: TextAlign.left,
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.w700,
+                                      fontSize: 22,
+                                      color: Colors.white
+                                  ),
+                                )
                               ),
                               Row(
                                 mainAxisSize: MainAxisSize.max,
-                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                mainAxisAlignment: MainAxisAlignment.start,
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: <Widget>[
                                   InkWell(
                                     onTap: () => this._ubicarSitio(id, aux),
                                     child: Container(
                                       width: 90,
+                                      margin: EdgeInsets.only(right: 8),
                                       padding: EdgeInsets.only(left: 7, right: 7, top: 8, bottom: 8),
                                       decoration: BoxDecoration(
                                           color: Colors.red,
@@ -462,22 +485,22 @@ class _SitiosState extends State<Sitios> with TickerProviderStateMixin {
                               ),
                             ],
                           ),
-                          Align(
-                            alignment: Alignment.topRight,
+                          Positioned(
+                            right: -12,
                             child: Padding(
-                              padding: EdgeInsets.only(left: 10, right: 10),
+                              padding: EdgeInsets.only(top: 10, left: 10, right: 0),
                               child: this._getStatusSite(id) ?
                               IconButton(
                                 icon: Icon(
                                   Icons.favorite,
-                                  color: Colors.red,
+                                  color: Colors.white,
                                   size: 25,
                                 ),
                                 onPressed: () => this._removeSiteToFavorite(id, aux),
                               ) : IconButton(
                                 icon: Icon(
                                   Icons.favorite_border,
-                                  color: Colors.red,
+                                  color: Colors.white,
                                   size: 25,
                                 ),
                                 onPressed: () => this._addSiteToFavorite(id, aux),
@@ -493,75 +516,90 @@ class _SitiosState extends State<Sitios> with TickerProviderStateMixin {
             ) : Container(),
             this._showInfo && this._currentSite != null ?
               Positioned(
-                left: (MediaQuery.of(context).size.width * 0.07) / 2,
-                bottom: MediaQuery.of(context).size.height * 0.24,
+                left: (MediaQuery.of(context).size.width * 0.06) / 2,
+                bottom: MediaQuery.of(context).size.height * 0.30,
                 child: Container(
-                  width: MediaQuery.of(context).size.width * 0.93,
-                  height: MediaQuery.of(context).size.height * 0.20,
-                  padding: EdgeInsets.only(left: 25, right: 25),
+                  width: MediaQuery.of(context).size.width * 0.94,
+                  height: MediaQuery.of(context).size.height * 0.30,
                   decoration: BoxDecoration(
-                    color: Color(0xFFf2f2f2),
-                    borderRadius: BorderRadius.circular(12)
+                    color: Color(0xFFf5f5f5),
+                    borderRadius: BorderRadius.circular(18)
                   ),
-                  child: SingleChildScrollView(
-                    scrollDirection: Axis.vertical,
-                    child: Stack(
-                      children: <Widget>[
-                        Column(
+                  child: Column(
+                    mainAxisSize: MainAxisSize.max,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: <Widget>[
+                      Container(
+                        height: (MediaQuery.of(context).size.height * 0.30) * 0.30,
+                        padding: EdgeInsets.only(left: 30, right: 30),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.max,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          crossAxisAlignment: CrossAxisAlignment.center,
                           children: <Widget>[
-                            Container(
-                                width: MediaQuery.of(context).size.width - 50,
-                                padding: EdgeInsets.only(top: 22, bottom: 15),
-                                margin: EdgeInsets.only(right: 10),
-                                child: Column(
-                                  mainAxisSize: MainAxisSize.max,
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: <Widget>[
-                                    Text(
-                                        this._currentSite.label,
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 18
-                                        )
-                                    ),
-                                    Padding(
-                                      padding: EdgeInsets.only(top: 10),
-                                      child: Text(
-                                        this._currentSite.description,
-                                        textAlign: TextAlign.justify,
-                                        style: TextStyle(
-                                          fontSize: 13
-                                        ),
-                                      ),
-                                    ),
-                                  ],
+                            Text(
+                                this._currentSite.label,
+                                style: TextStyle(
+                                    color: Color(0xFF454F63),
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 18
                                 )
                             ),
-                            Container(
-                                width: MediaQuery.of(context).size.width - 50,
-                                padding: EdgeInsets.only(bottom: 20),
+                            IconButton(
+                              icon: Icon(
+                                FontAwesomeIcons.timesCircle,
+                                color: Color(0xFF454F63),
+                              ),
+                              onPressed: () {
+                                setState(() {
+                                  this._currentSite = null;
+                                  this._showInfo = false;
+                                });
+                              },
+                            )
+                          ],
+                        ),
+                      ),
+                      Container(
+                        height: (MediaQuery.of(context).size.height * 0.30) * 0.70,
+                        padding: EdgeInsets.only(left: 30, right: 30, bottom: 20),
+                        child: SingleChildScrollView(
+                          scrollDirection: Axis.vertical,
+                          child: Column(
+                            children: <Widget>[
+                              Padding(
+                                padding: EdgeInsets.only(top: 5, bottom: 5),
+                                child: Text(
+                                  this._currentSite.description,
+                                  textAlign: TextAlign.justify,
+                                  style: TextStyle(
+                                      fontSize: 13
+                                  ),
+                                ),
+                              ),
+                              Padding(
+                                padding: EdgeInsets.only(top: 5, bottom: 5),
                                 child: Column(
-                                  mainAxisSize: MainAxisSize.min,
-                                  mainAxisAlignment: MainAxisAlignment.center,
                                   children: <Widget>[
                                     Row(
                                       children: <Widget>[
                                         Padding(
                                           padding: EdgeInsets.only(right: 10),
-                                          child: Text(
+                                            child: Text(
                                               "Principal:",
                                               style: TextStyle(
-                                                  fontWeight: FontWeight.bold,
-                                                  fontSize: 13
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 13
                                               )
-                                          ),
+                                            ),
                                         ),
                                         Text(
-                                            this._currentSite.address.main,
-                                            style: TextStyle(
-                                                fontWeight: FontWeight.normal,
-                                                fontSize: 13
-                                            )
+                                          this._currentSite.address.main,
+                                          style: TextStyle(
+                                            fontWeight: FontWeight.normal,
+                                            fontSize: 13
+                                          )
                                         ),
                                       ],
                                     ),
@@ -570,19 +608,19 @@ class _SitiosState extends State<Sitios> with TickerProviderStateMixin {
                                         Padding(
                                           padding: EdgeInsets.only(right: 10),
                                           child: Text(
-                                              "Secundaria:",
-                                              style: TextStyle(
-                                                  fontWeight: FontWeight.bold,
-                                                  fontSize: 13
-                                              )
+                                            "Secundaria:",
+                                            style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 13
+                                            )
                                           ),
                                         ),
                                         Text(
-                                            this._currentSite.address.secondary,
-                                            style: TextStyle(
-                                                fontWeight: FontWeight.normal,
-                                                fontSize: 13
-                                            )
+                                          this._currentSite.address.secondary,
+                                          style: TextStyle(
+                                            fontWeight: FontWeight.normal,
+                                            fontSize: 13
+                                          )
                                         ),
                                       ],
                                     ),
@@ -591,44 +629,30 @@ class _SitiosState extends State<Sitios> with TickerProviderStateMixin {
                                         Padding(
                                           padding: EdgeInsets.only(right: 10),
                                           child: Text(
-                                              "Referencia:",
-                                              style: TextStyle(
-                                                  fontWeight: FontWeight.bold,
-                                                  fontSize: 13
-                                              )
+                                            "Referencia:",
+                                            style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 13
+                                            )
                                           ),
                                         ),
                                         Text(
-                                            this._currentSite.address.reference,
-                                            style: TextStyle(
-                                                fontWeight: FontWeight.normal,
-                                                fontSize: 13
-                                            )
+                                          this._currentSite.address.reference,
+                                          style: TextStyle(
+                                            fontWeight: FontWeight.normal,
+                                            fontSize: 13
+                                          )
                                         ),
                                       ],
                                     )
-                                  ],
+                                  ]
                                 )
-                            ),
-                          ],
-                        ),
-                        Align(
-                          alignment: Alignment.topRight,
-                          child: IconButton(
-                            icon: Icon(
-                              FontAwesomeIcons.timesCircle,
-                              color: Colors.red,
-                            ),
-                            onPressed: () {
-                              setState(() {
-                                this._currentSite = null;
-                                this._showInfo = false;
-                              });
-                            } ,
+                              )
+                            ],
                           ),
-                        )
-                      ],
-                    )
+                        ),
+                      )
+                    ],
                   ),
                 ),
               ) : Container()
