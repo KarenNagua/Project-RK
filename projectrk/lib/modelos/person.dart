@@ -21,7 +21,7 @@ class Person {
     map["birthday"] = this._birthday;
     map["cellphone"] = this._cellphone;
     map["names"] = this._names;
-    map["pictures"] = this._picture;
+    map["picture"] = this._picture;
     map["surnames"] = this._surnames;
     map["register_date"] = this._register_date;
 
@@ -33,7 +33,7 @@ class Person {
     this._birthday = map["birthday"];
     this._cellphone = map["cellphone"];
     this._names = map["names"];
-    this._picture = map["pictures"];
+    this._picture = map["picture"];
     this._surnames = map["surnames"];
     this._register_date = map["register_date"];
 
