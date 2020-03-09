@@ -10,7 +10,7 @@
         android:label="projectrk"
         android:icon="@mipmap/ic_launcher">
         <meta-data android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyCotEFBZ2kPSkGcgB65fQ-ZtBDVtrXtoDI"/>
+            android:value="AIzaSyAIPnETEqnVLpCPD3kXwIJ9wepfmsW4Ss4"/>
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTop"
