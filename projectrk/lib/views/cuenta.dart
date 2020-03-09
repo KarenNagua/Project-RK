@@ -10,6 +10,7 @@ import 'package:projectrk/modelos/account.dart';
 import 'package:projectrk/modelos/person.dart';
 import 'package:projectrk/views/sitios.dart';
 import 'package:projectrk/views/splash.dart';
+import 'package:projectrk/views/about.dart';
 
 
 class Cuenta extends StatefulWidget {
@@ -343,6 +344,19 @@ class _CuentaState extends State<Cuenta> with TickerProviderStateMixin {
                 title: Text('Mi cuenta'),
                 onTap: () {
                   //Is the same window, not change
+                },
+              ),
+              ListTile(
+                leading: Icon(
+                  Icons.info,
+                  color: Colors.black,
+                ),
+                title: Text('Acerca de'),
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => About()),
+                  );
                 },
               ),
               ListTile(

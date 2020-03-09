@@ -14,6 +14,7 @@ import 'package:projectrk/modelos/category.dart';
 import 'package:projectrk/modelos/mysites.dart';
 import 'package:projectrk/modelos/person.dart';
 import 'package:projectrk/modelos/site.dart';
+import 'package:projectrk/views/about.dart';
 import 'package:projectrk/views/cuenta.dart';
 import 'package:projectrk/views/splash.dart';
 
@@ -447,6 +448,19 @@ class _SitiosState extends State<Sitios> with TickerProviderStateMixin {
                     Navigator.push(
                       context,
                       MaterialPageRoute(builder: (context) => Cuenta()),
+                    );
+                  },
+                ),
+                ListTile(
+                  leading: Icon(
+                    Icons.info,
+                    color: Colors.black,
+                  ),
+                  title: Text('Acerca de'),
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => About()),
                     );
                   },
                 ),
